@@ -20,6 +20,10 @@ Map::~Map()
 
 // private methods
 
+void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+
+}
 void Map::fillMapTableOneValue(Tile value)
 {
     for(int i = 0; i < widthTilesNumber; ++i)

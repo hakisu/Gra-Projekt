@@ -438,13 +438,20 @@
 
 1488438334 c:\users\michael\skydrive\uczelnia\inzyneria oprogramowania\projekt\component.h
 
-1487876284 source:c:\users\michael\onedrive\gra-projekt\game.cpp
+1488925138 source:c:\users\michael\onedrive\gra-projekt\game.cpp
+	<chrono>
+	<SFML/Graphics.hpp>
+	"Game.h"
+	"Map.h"
+	<iostream>
 
-1488438139 source:c:\users\michael\onedrive\gra-projekt\map.cpp
+1488826813 source:c:\users\michael\onedrive\gra-projekt\map.cpp
 	"map.h"
 
-1488444064 c:\users\michael\onedrive\gra-projekt\map.h
+1488831729 c:\users\michael\onedrive\gra-projekt\map.h
+	"SFML/Graphics.hpp"
 	"tile.h"
+	"MapLoader.h"
 
 1487880481 c:\users\michael\onedrive\gra-projekt\tile.h
 	<string>
@@ -452,7 +459,33 @@
 1487880465 source:c:\users\michael\onedrive\gra-projekt\tile.cpp
 	"tile.h"
 
-1488447116 source:c:\users\michael\onedrive\gra-projekt\main.cpp
+1488920810 source:c:\users\michael\onedrive\gra-projekt\main.cpp
+	<iostream>
+	<thread>
+	"Game.h"
+	"Map.h"
+	"Component.h"
+
+1488924905 c:\users\michael\onedrive\gra-projekt\game.h
+	"InputManager.h"
+
+1488438334 c:\users\michael\onedrive\gra-projekt\component.h
+
+1487876284 source:c:\users\michael\skydrive\gra-projekt\game.cpp
+
+1488438139 source:c:\users\michael\skydrive\gra-projekt\map.cpp
+	"map.h"
+
+1488444064 c:\users\michael\skydrive\gra-projekt\map.h
+	"tile.h"
+
+1487880481 c:\users\michael\skydrive\gra-projekt\tile.h
+	<string>
+
+1487880465 source:c:\users\michael\skydrive\gra-projekt\tile.cpp
+	"tile.h"
+
+1488805474 source:c:\users\michael\skydrive\gra-projekt\main.cpp
 	<iostream>
 	<chrono>
 	<thread>
@@ -461,7 +494,17 @@
 	"map.h"
 	"component.h"
 
-1488135298 c:\users\michael\onedrive\gra-projekt\game.h
+1488135298 c:\users\michael\skydrive\gra-projekt\game.h
 
-1488438334 c:\users\michael\onedrive\gra-projekt\component.h
+1488438334 c:\users\michael\skydrive\gra-projekt\component.h
+
+1488831688 c:\users\michael\onedrive\gra-projekt\maploader.h
+
+1488926773 source:c:\users\michael\onedrive\gra-projekt\inputmanager.cpp
+	<SFML/Graphics.hpp>
+	"InputManager.h"
+	<iostream>
+
+1488925025 c:\users\michael\onedrive\gra-projekt\inputmanager.h
+	<SFML/Graphics.hpp>
 
