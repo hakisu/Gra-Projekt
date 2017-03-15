@@ -1,81 +1,81 @@
 #include <chrono>
+#include <iostream>
+#include <thread>
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 #include "Map.h"
-#include <iostream>
+#include "Constants.h"
+#include "PhysicsComponent.h"
 
 using namespace std::chrono;
 using namespace std;
 
-const int GAME_SPEED = 10;
-
-Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, view)
+Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, gameCamera), gameMap(Constants::MAP_WIDTH, Constants::MAP_HEIGHT)
 {
-
+    hero1 = new GameEntity(70, 20, new GraphicsComponent());
+    hero2 = new GameEntity(400, 320, new GraphicsComponent());
+    hero1->addComponent(new PhysicsComponent());
+    hero2->addComponent(new PhysicsComponent());
+    for(int i = 0; i < 50; ++i)
+    {
+        objects.push_back(GameEntity(3500, 3500, new GraphicsComponent()));
+        objects[i].addComponent(new PhysicsComponent());
+    }
 }
 
 int Game::run()
 {
-    Map mapa(300,300);
-
-    view.reset(sf::FloatRect(0, 0, 400, 400));
-
-    sf::CircleShape shape(50);
-    shape.setPosition(1200, 0);
-
-
-
-
-
-
-    sf::Font font;
-    if(!font.loadFromFile("arial.ttf"))
-        return 0;
-    sf::Text text;
-    text.setFont(font);
-    text.setString("hello world");
-    text.setCharacterSize(44);
-    text.setFillColor(sf::Color::Red);
-    text.setStyle(sf::Text::Underlined | sf::Text::Bold);
-
-
-    sf::VertexArray testArray(sf::Triangles, 3);
-    testArray[0].position = sf::Vector2f(0, 0);
-    testArray[1].position = sf::Vector2f(100, 0);
-    testArray[2].position = sf::Vector2f(0, 100);
-    testArray[0].color = sf::Color::Blue;
-    testArray[1].color = sf::Color::Red;
-    testArray[2].color = sf::Color::Green;
-
+    gameCamera.reset(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
+    sf::RenderStates states;
 
     double timeDelay = 0;
     auto previousTimeMeasure = high_resolution_clock::now();
     while(window.isOpen())
     {
+        this_thread::sleep_for(1ms);
+        // Pomiar czasu wykonywania 1 klatki gry
         auto newTimeMeasure = high_resolution_clock::now();
         double timeDifference = duration_cast<milliseconds>(newTimeMeasure - previousTimeMeasure).count();
         timeDelay += timeDifference;
         previousTimeMeasure = newTimeMeasure;
 
         // Obsluga inputu
-        inputManager.handleInput();
+        inputManager.handleInput(*this);
 
-
-
-        while(timeDelay >= GAME_SPEED)
+        while(timeDelay >= Constants::GAME_SPEED)
         {
             // silnik ai,physics...
-            timeDelay -= GAME_SPEED;
+            if(testPause == false)
+                update();
+            timeDelay -= Constants::GAME_SPEED;
         }
 
-        window.setView(view);
-        window.clear(sf::Color::Black);
-//        window.draw(text);
-        window.draw(testArray);
-        window.draw(shape);
-        window.display();
+        // Renderowanie grafiki
+        render(timeDelay / Constants::GAME_SPEED);
     }
     return 0;
 }
 
-//        std::this_thread::sleep_for(milliseconds(20));
+void Game::render(double timeProgressValue)
+{
+    window.setView(gameCamera);
+
+    window.clear(sf::Color::Black);
+
+    window.draw(gameMap);
+
+    hero1->render(window);
+    hero2->render(window);
+    for(int i = 0; i < 50; ++i)
+        objects[i].render(window);
+
+    window.display();
+}
+
+void Game::update()
+{
+    hero1->update();
+    hero2->update();
+    for(int i = 0; i < 50; ++i)
+        objects[i].update();
+}
