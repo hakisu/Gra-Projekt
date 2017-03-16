@@ -11,6 +11,7 @@ private:
 public:
     PhysicsComponent();
     virtual void update(GameEntity& gameEntity);
+    void setDestinationTile(int tileIndex);
 };
 
 #endif // PHYSICS_COMPONENT_H

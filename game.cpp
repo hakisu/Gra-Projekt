@@ -16,7 +16,7 @@ Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, game
     hero2 = new GameEntity(400, 320, new GraphicsComponent());
     hero1->addComponent(new PhysicsComponent());
     hero2->addComponent(new PhysicsComponent());
-    for(int i = 0; i < 50; ++i)
+    for(int i = 0; i < numberOfObjects; ++i)
     {
         objects.push_back(GameEntity(3500, 3500, new GraphicsComponent()));
         objects[i].addComponent(new PhysicsComponent());
@@ -26,6 +26,7 @@ Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, game
 int Game::run()
 {
     gameCamera.reset(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
+    gameCamera.setCenter(3000, 3000);
     sf::RenderStates states;
 
     double timeDelay = 0;
@@ -66,7 +67,7 @@ void Game::render(double timeProgressValue)
 
     hero1->render(window);
     hero2->render(window);
-    for(int i = 0; i < 50; ++i)
+    for(int i = 0; i < numberOfObjects; ++i)
         objects[i].render(window);
 
     window.display();
@@ -76,6 +77,6 @@ void Game::update()
 {
     hero1->update();
     hero2->update();
-    for(int i = 0; i < 50; ++i)
+    for(int i = 0; i < numberOfObjects; ++i)
         objects[i].update();
 }

@@ -47,3 +47,8 @@ void PhysicsComponent::update(GameEntity& gameEntity)
         destinationTile = RandomNumberGenerator::getIntNumber(0, Constants::MAP_WIDTH * Constants::MAP_HEIGHT - 1);
     }
 }
+
+void PhysicsComponent::setDestinationTile(int tileIndex)
+{
+    this->destinationTile = tileIndex;
+}

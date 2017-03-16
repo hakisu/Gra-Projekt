@@ -10,7 +10,7 @@ class Game;
 class GameEntity
 {
 private:
-    std::vector<Component*> components;
+//    std::vector<Component*> components;
     GraphicsComponent *graphicsComponent;
 public:
     GameEntity(double posX, double posY, GraphicsComponent* graphics);
@@ -21,5 +21,6 @@ public:
     // zrobic gettery i settery do tego, przestawic na private
     double posX;
     double posY;
+    std::vector<Component*> components;
 };
 #endif // GAME_ENTITY_H

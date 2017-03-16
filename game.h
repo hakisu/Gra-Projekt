@@ -8,20 +8,26 @@
 class Game
 {
 private:
-    sf::RenderWindow& window;
-    InputManager inputManager;
-    Map gameMap;
+//    sf::RenderWindow& window;
+//    InputManager inputManager;
+//    Map gameMap;
     sf::View gameCamera;
     GameEntity* hero1;
     GameEntity* hero2;
-    std::vector<GameEntity> objects;
+//    int numberOfObjects = 2000;
+//    std::vector<GameEntity> objects;
 
 public:
     Game(sf::RenderWindow& window);
     void render(double timeProgressValue);
     int run();
     void update();
-    bool testPause = false;
+    bool testPause = true;
+    int numberOfObjects = 2000;
+    std::vector<GameEntity> objects;
+    sf::RenderWindow& window;
+    InputManager inputManager;
+    Map gameMap;
 };
 
 
