@@ -14,7 +14,7 @@ InputManager::InputManager(sf::RenderWindow& window, sf::View& gameCamera) : win
 
 void InputManager::handleInput(Game& game)
 {
-    double moveValue = 40;
+    double moveValue = 10;
     sf::Event event;
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))

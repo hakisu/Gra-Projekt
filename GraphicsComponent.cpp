@@ -8,9 +8,12 @@ GraphicsComponent::GraphicsComponent()
     sprite.setTexture(texture);
 }
 
-void GraphicsComponent::render(GameEntity& gameEntity, sf::RenderWindow& window)
+void GraphicsComponent::render(GameEntity& gameEntity, sf::RenderWindow& window, double timeProgressValue)
 {
     sprite.setPosition(gameEntity.posX, gameEntity.posY);
-    window.draw(sprite);
+    // timeProgressValue uzyte w states do interpolacji / ekstrapolacji pozycji do wyswietlenia miedzy updatami silnika gry
+    sf::RenderStates states;
+    states.transform.translate(gameEntity.changePosX * timeProgressValue, gameEntity.changePosY * timeProgressValue);
+    window.draw(sprite, states);
 }
 

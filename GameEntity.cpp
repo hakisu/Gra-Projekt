@@ -12,9 +12,9 @@ void GameEntity::addComponent(Component* newComponent)
     components.push_back(newComponent);
 }
 
-void GameEntity::render(sf::RenderWindow& window)
+void GameEntity::render(sf::RenderWindow& window, double timeProgressValue)
 {
-    graphicsComponent->render(*this, window);
+    graphicsComponent->render(*this, window, timeProgressValue);
 }
 
 void GameEntity::update()

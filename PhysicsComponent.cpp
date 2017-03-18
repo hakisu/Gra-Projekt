@@ -9,7 +9,6 @@ PhysicsComponent::PhysicsComponent()
 {
     this->movementSpeed = RandomNumberGenerator::getIntNumber(1, 20);
     destinationTile = RandomNumberGenerator::getIntNumber(0, Constants::MAP_WIDTH * Constants::MAP_HEIGHT - 1);
-    std::cout << movementSpeed << std::endl;
 }
 
 void PhysicsComponent::update(GameEntity& gameEntity)
@@ -20,26 +19,32 @@ void PhysicsComponent::update(GameEntity& gameEntity)
     if(std::floor(gameEntity.posX + movementSpeed) < destinationPosX)
     {
         gameEntity.posX += movementSpeed;
+        gameEntity.changePosX = movementSpeed;
     }
     else if(std::floor(gameEntity.posX - movementSpeed) > destinationPosX)
     {
         gameEntity.posX -= movementSpeed;
+        gameEntity.changePosX = -movementSpeed;
     }
     else
     {
         gameEntity.posX = destinationPosX;
+        gameEntity.changePosX = 0;
     }
     if(std::floor(gameEntity.posY + movementSpeed) < destinationPosY)
     {
         gameEntity.posY += movementSpeed;
+        gameEntity.changePosY = movementSpeed;
     }
     else if(std::floor(gameEntity.posY - movementSpeed) > destinationPosY)
     {
         gameEntity.posY -= movementSpeed;
+        gameEntity.changePosY = -movementSpeed;
     }
     else
     {
         gameEntity.posY = destinationPosY;
+        gameEntity.changePosY = 0;
     }
 
     if(gameEntity.posX == destinationPosX && gameEntity.posY == destinationPosY)

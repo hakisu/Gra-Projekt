@@ -65,10 +65,13 @@ void Game::render(double timeProgressValue)
 
     window.draw(gameMap);
 
-    hero1->render(window);
-    hero2->render(window);
+    if(testPause == true)
+        timeProgressValue = 0;
+
+    hero1->render(window, timeProgressValue);
+    hero2->render(window, timeProgressValue);
     for(int i = 0; i < numberOfObjects; ++i)
-        objects[i].render(window);
+        objects[i].render(window, timeProgressValue);
 
     window.display();
 }

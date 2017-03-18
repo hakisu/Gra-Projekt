@@ -438,7 +438,7 @@
 
 1488438334 c:\users\michael\skydrive\uczelnia\inzyneria oprogramowania\projekt\component.h
 
-1489619816 source:c:\users\michael\onedrive\gra-projekt\game.cpp
+1489857498 source:c:\users\michael\onedrive\gra-projekt\game.cpp
 	<chrono>
 	<iostream>
 	<thread>
@@ -448,34 +448,34 @@
 	"Constants.h"
 	"PhysicsComponent.h"
 
-1489610671 source:c:\users\michael\onedrive\gra-projekt\map.cpp
+1489620127 source:c:\users\michael\onedrive\gra-projekt\map.cpp
 	"map.h"
 	"Constants.h"
 	<iostream>
 
-1489055256 c:\users\michael\onedrive\gra-projekt\map.h
+1489620127 c:\users\michael\onedrive\gra-projekt\map.h
 	"SFML/Graphics.hpp"
 	"tile.h"
 
-1489509514 c:\users\michael\onedrive\gra-projekt\tile.h
+1489620127 c:\users\michael\onedrive\gra-projekt\tile.h
 	<string>
 
-1489509424 source:c:\users\michael\onedrive\gra-projekt\tile.cpp
+1489620127 source:c:\users\michael\onedrive\gra-projekt\tile.cpp
 	"tile.h"
 
-1489613919 source:c:\users\michael\onedrive\gra-projekt\main.cpp
+1489652684 source:c:\users\michael\onedrive\gra-projekt\main.cpp
 	<iostream>
 	<thread>
 	"Game.h"
 	"Map.h"
 	"Component.h"
 
-1489619547 c:\users\michael\onedrive\gra-projekt\game.h
+1489856794 c:\users\michael\onedrive\gra-projekt\game.h
 	"InputManager.h"
 	"Map.h"
 	"GameEntity.h"
 
-1489607947 c:\users\michael\onedrive\gra-projekt\component.h
+1489620127 c:\users\michael\onedrive\gra-projekt\component.h
 
 1489652407 source:c:\users\michael\skydrive\gra-projekt\game.cpp
 	<chrono>
@@ -518,16 +518,18 @@
 
 1488831688 c:\users\michael\onedrive\gra-projekt\maploader.h
 
-1489617477 source:c:\users\michael\onedrive\gra-projekt\inputmanager.cpp
+1489856596 source:c:\users\michael\onedrive\gra-projekt\inputmanager.cpp
 	<SFML/Graphics.hpp>
 	"InputManager.h"
 	<iostream>
 	"Game.h"
+	"Constants.h"
+	"PhysicsComponent.h"
 
-1489611282 c:\users\michael\onedrive\gra-projekt\inputmanager.h
+1489620127 c:\users\michael\onedrive\gra-projekt\inputmanager.h
 	<SFML/Graphics.hpp>
 
-1489617794 c:\users\michael\onedrive\gra-projekt\constants.h
+1489857086 c:\users\michael\onedrive\gra-projekt\constants.h
 
 1489620127 c:\users\michael\skydrive\gra-projekt\inputmanager.h
 	<SFML/Graphics.hpp>
@@ -542,7 +544,7 @@
 	"Constants.h"
 	"PhysicsComponent.h"
 
-1489607292 c:\users\michael\onedrive\gra-projekt\gameentity.h
+1489855539 c:\users\michael\onedrive\gra-projekt\gameentity.h
 	<vector>
 	"Component.h"
 	"GraphicsComponent.h"
@@ -569,31 +571,31 @@
 1489573841 source:c:\users\michael\onedrive\gra-projekt\component.cpp
 	"Component.h"
 
-1489606034 c:\users\michael\onedrive\gra-projekt\graphicscomponent.h
+1489855647 c:\users\michael\onedrive\gra-projekt\graphicscomponent.h
 	"SFML/Graphics.hpp"
 	"Component.h"
 
-1489607879 source:c:\users\michael\onedrive\gra-projekt\gameentity.cpp
+1489855731 source:c:\users\michael\onedrive\gra-projekt\gameentity.cpp
 	"GameEntity.h"
 
-1489616940 source:c:\users\michael\onedrive\gra-projekt\graphicscomponent.cpp
+1489859449 source:c:\users\michael\onedrive\gra-projekt\graphicscomponent.cpp
 	"GameEntity.h"
 	"GraphicsComponent.h"
 
-1489619209 source:c:\users\michael\onedrive\gra-projekt\physicscomponent.cpp
+1489857658 source:c:\users\michael\onedrive\gra-projekt\physicscomponent.cpp
 	"PhysicsComponent.h"
 	"GameEntity.h"
 	<iostream>
 	"Constants.h"
 	"RandomNumberGenerator.h"
 
-1489615296 c:\users\michael\onedrive\gra-projekt\physicscomponent.h
+1489650570 c:\users\michael\onedrive\gra-projekt\physicscomponent.h
 	"Component.h"
 
-1489618881 c:\users\michael\onedrive\gra-projekt\randomnumbergenerator.h
+1489620127 c:\users\michael\onedrive\gra-projekt\randomnumbergenerator.h
 	<random>
 
-1489618795 source:c:\users\michael\onedrive\gra-projekt\randomnumbergenerator.cpp
+1489620127 source:c:\users\michael\onedrive\gra-projekt\randomnumbergenerator.cpp
 	"RandomNumberGenerator.h"
 	<chrono>
 

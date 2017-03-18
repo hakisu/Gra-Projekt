@@ -13,7 +13,7 @@ private:
     sf::Sprite sprite;
 public:
     GraphicsComponent();
-    void render(GameEntity& gameEntity, sf::RenderWindow& window);
+    void render(GameEntity& gameEntity, sf::RenderWindow& window, double timeProgressValue);
 };
 
 #endif // GRAPHICS_COMPONENT_H
