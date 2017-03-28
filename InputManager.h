@@ -1,9 +1,12 @@
 #ifndef INPUT_MANAGER_H
 #define INPUT_MANAGER_H
 
-#include <SFML/Graphics.hpp>
-
 class Game;
+namespace sf
+{
+    class RenderWindow;
+    class View;
+}
 
 class InputManager
 {

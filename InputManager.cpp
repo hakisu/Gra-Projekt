@@ -1,11 +1,12 @@
-#include <SFML/Graphics.hpp>
 #include "InputManager.h"
 
 #include <iostream>
-#include "Game.h"
+#include <SFML/Graphics.hpp>
 
+#include "Game.h"
 #include "Constants.h"
-#include "PhysicsComponent.h"
+#include "GameEntity.h"
+#include "MovementComponent.h"
 
 InputManager::InputManager(sf::RenderWindow& window, sf::View& gameCamera) : window(window), gameCamera(gameCamera)
 {
@@ -61,14 +62,19 @@ void InputManager::handleInput(Game& game)
 
                 int tileIndex = intMouseX + intMouseY * Constants::MAP_WIDTH;
 
-                PhysicsComponent* temp;
-                for(int i = 0; i < game.numberOfObjects; ++i)
+                if(game.getMap().isWalkable(tileIndex))
                 {
-                    temp = (PhysicsComponent*)(game.objects[i].components[0]);
-                    temp->setDestinationTile(tileIndex);
+                    MovementComponent* temp;
+                    for(int i = 0; i < game.numberOfObjects; ++i)
+                    {
+                        temp = (MovementComponent*)(game.objects[i].components[0]);
+                        temp->setDestinationTile(tileIndex);
+                    }
                 }
+                else
+                    std::cout << "Nie da sie wejsc na to pole!\n";
 
-                std::cout << intMouseX << " " << intMouseY << std::endl;
+                std::cout << intMouseX << " " << intMouseY << "\n";
             }
         }
         if(event.type == sf::Event::MouseWheelScrolled)
@@ -97,12 +103,32 @@ void InputManager::handleInput(Game& game)
                 }
                 case sf::Keyboard::Q :
                 {
-                        game.window.create(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Tytul okna", sf::Style::Fullscreen);
-                        break;
+                    window.create(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "Tytul okna", sf::Style::Fullscreen);
+                    break;
+                }
+                case sf::Keyboard::Z :
+                {
+                    game.displayPath = !game.displayPath;
+                    break;
+                }
+                case sf::Keyboard::Num1 :
+                {
+                    game.setGameSpeed(Constants::GAME_SPEED);
+                    break;
+                }
+                case sf::Keyboard::Num2 :
+                {
+                    game.setGameSpeed(Constants::GAME_SPEED / 2);
+                    break;
+                }
+                case sf::Keyboard::Num3 :
+                {
+                    game.setGameSpeed(Constants::GAME_SPEED / 3);
+                    break;
                 }
                 default :
                 {
-
+                    break;
                 }
             }
         }

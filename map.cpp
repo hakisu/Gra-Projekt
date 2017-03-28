@@ -1,6 +1,7 @@
 #include "map.h"
 #include "Constants.h"
 #include <iostream>
+#include "Tile.h"
 
 // public methods
 Map::Map(int widthTilesNumber, int heightTilesNumber) : widthTilesNumber(widthTilesNumber), heightTilesNumber(heightTilesNumber)
@@ -24,7 +25,7 @@ Map::Map(int widthTilesNumber, int heightTilesNumber) : widthTilesNumber(widthTi
     {
         for(int j = 0; j < widthTilesNumber; ++j)
         {
-            int tileIndex = mapTable[i * widthTilesNumber + j].getType();
+            int tileIndex = static_cast<int>(mapTable[i * widthTilesNumber + j].getType());
 
             int textureCoordinateX = tileIndex % (mapTileset.getSize().x / Constants::TILE_WIDTH);
             int textureCoordinateY = tileIndex / (mapTileset.getSize().x / Constants::TILE_WIDTH);
@@ -86,9 +87,14 @@ void Map::createMountain(int positionX, int positionY, int width, int height, Ti
 
 void Map::generateMap()
 {
-    fillMapTableOneValue(Tile(4, "test"));
-    createMountain(0, 0, 5, 3, Tile(1, "test2"));
-    createMountain(30, 50, 20, 2, Tile(3, "test5"));
-    createMountain(17, 0, 4, 70, Tile(6, "test2"));
-    createMountain(45, 5, 26, 20, Tile(0, "test2"));
+    fillMapTableOneValue(Tile(TileType::sand0, "piasek_0"));
+    createMountain(0, 0, 5, 3, Tile(TileType::grass1, "trawa_1"));
+    createMountain(30, 50, 20, 2, Tile(TileType::ground1, "ziemia_1"));
+    createMountain(17, 0, 4, 70, Tile(TileType::water0, "woda_0", false));
+    createMountain(45, 5, 26, 20, Tile(TileType::grass0, "trawa_0"));
+}
+
+bool Map::isWalkable(int tileIndex)
+{
+    return mapTable[tileIndex].isWalkable();
 }

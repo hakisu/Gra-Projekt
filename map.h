@@ -2,9 +2,9 @@
 #define MAP_H
 
 #include "SFML/Graphics.hpp"
-#include "tile.h"
+//#include "tile.h"
 
-enum class TileType;
+class Tile;
 
 class Map : public sf::Drawable, public sf::Transformable
 {
@@ -24,7 +24,8 @@ private:
 public:
     Map(int widthTilesNumber, int heightTilesNumber);
     ~Map();
+
+    bool isWalkable(int tileIndex);
 };
 
-enum class TileType{grass, ground, sand, water};
 #endif // MAP_H

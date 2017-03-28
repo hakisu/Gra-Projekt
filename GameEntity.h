@@ -2,27 +2,43 @@
 #define GAME_ENTITY_H
 
 #include <vector>
-#include "Component.h"
-#include "GraphicsComponent.h"
-
-class Game;
+class Component;
+class GraphicsComponent;
+namespace sf
+{
+    class RenderWindow;
+}
 
 class GameEntity
 {
 private:
-//    std::vector<Component*> components;
+    float posX;
+    float posY;
+    float currentChangeInPosX;
+    float currentChangeInPosY;
     GraphicsComponent *graphicsComponent;
+//    std::vector<Component*> components;
+    static int entitesNumber;
 public:
-    GameEntity(double posX, double posY, GraphicsComponent* graphics);
+    GameEntity(unsigned int posXIndex, unsigned int posYIndex, GraphicsComponent* graphics);
+    GameEntity(const GameEntity& gameEntity);
+    ~GameEntity();
+
+    float getCurrentChangeInPosX() const;
+    float getCurrentChangeInPosY() const;
+    float getPosX() const;
+    float getPosY() const;
+    void setCurrentChangeInPosX(float currentChangeInPosX);
+    void setCurrentChangeInPosY(float currentChangeInPosY);
+    void setPosX(float posX);
+    void setPosY(float posY);
+
     void addComponent(Component* newComponent);
     void render(sf::RenderWindow& window, double timeProgressValue);
     void update();
 
-    // zrobic gettery i settery do tego, przestawic na private
-    double posX;
-    double posY;
-    double changePosX = 0;
-    double changePosY = 0;
+    // temp
     std::vector<Component*> components;
 };
+
 #endif // GAME_ENTITY_H

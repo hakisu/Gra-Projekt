@@ -2,16 +2,15 @@
 
 Tile::Tile()
 {
-    tileType = "default";
-    type = 0;
-    isWalkable = true;
+    type = TileType::ground0;
+    walkable = true;
 }
 
-Tile::Tile(int type, string name)
+Tile::Tile(TileType type, string name, bool walkable)
 {
     this->type = type;
-    tileType = name;
-    isWalkable = true;
+    this->tileName = name;
+    this->walkable = walkable;
 }
 
 Tile::~Tile()
@@ -19,7 +18,12 @@ Tile::~Tile()
 
 }
 
-int Tile::getType()
+TileType Tile::getType()
 {
     return type;
+}
+
+bool Tile::isWalkable()
+{
+    return walkable;
 }

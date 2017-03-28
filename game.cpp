@@ -1,30 +1,44 @@
+#include "Game.h"
+
 #include <chrono>
 #include <iostream>
 #include <thread>
 #include <SFML/Graphics.hpp>
-#include "Game.h"
-#include "Map.h"
+#include <fstream>
+#include <typeinfo>
+
+#include "GameLibrary.h"
 #include "Constants.h"
-#include "PhysicsComponent.h"
+#include "Map.h"
+#include "MovementComponent.h"
+#include "GraphicsComponent.h"
+#include "MovementComponent.h"
+#include "RandomNumberGenerator.h"
+#include "PathDisplaySystem.h"
 
 using namespace std::chrono;
 using namespace std;
 
-Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, gameCamera), gameMap(Constants::MAP_WIDTH, Constants::MAP_HEIGHT)
+Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, gameCamera),
+                                       gameMap(Constants::MAP_WIDTH, Constants::MAP_HEIGHT),
+                                       currentGameSpeed(Constants::GAME_SPEED)
 {
-    hero1 = new GameEntity(70, 20, new GraphicsComponent());
-    hero2 = new GameEntity(400, 320, new GraphicsComponent());
-    hero1->addComponent(new PhysicsComponent());
-    hero2->addComponent(new PhysicsComponent());
+    this->numberOfObjects = Constants::INITIAL_OBJECTS_RESERVED;
+    objects.reserve(Constants::INITIAL_OBJECTS_RESERVED);
+
     for(int i = 0; i < numberOfObjects; ++i)
     {
-        objects.push_back(GameEntity(3500, 3500, new GraphicsComponent()));
-        objects[i].addComponent(new PhysicsComponent());
+        objects.emplace_back(RandomNumberGenerator::getIntNumber(0, Constants::MAP_WIDTH - 1),
+                             RandomNumberGenerator::getIntNumber(0, Constants::MAP_HEIGHT - 1),
+                             new GraphicsComponent());
+        objects[i].addComponent(new MovementComponent(gameMap));
     }
 }
 
 int Game::run()
 {
+    ofstream fileHandle;
+    fileHandle.open("time_logs.txt");
     gameCamera.reset(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
     gameCamera.setCenter(3000, 3000);
     sf::RenderStates states;
@@ -43,17 +57,21 @@ int Game::run()
         // Obsluga inputu
         inputManager.handleInput(*this);
 
-        while(timeDelay >= Constants::GAME_SPEED)
+        while(timeDelay >= currentGameSpeed)
         {
             // silnik ai,physics...
             if(testPause == false)
                 update();
-            timeDelay -= Constants::GAME_SPEED;
+            timeDelay -= currentGameSpeed;
         }
 
         // Renderowanie grafiki
-        render(timeDelay / Constants::GAME_SPEED);
+        render(timeDelay / currentGameSpeed);
+
+        if(timeDifference > 10)
+            fileHandle << timeDifference << "\n";
     }
+    fileHandle.close();
     return 0;
 }
 
@@ -68,18 +86,38 @@ void Game::render(double timeProgressValue)
     if(testPause == true)
         timeProgressValue = 0;
 
-    hero1->render(window, timeProgressValue);
-    hero2->render(window, timeProgressValue);
-    for(int i = 0; i < numberOfObjects; ++i)
-        objects[i].render(window, timeProgressValue);
+    for(auto &i : objects)
+    {
+        i.render(window, timeProgressValue);
+        if(displayPath)
+            PathDisplaySystem::render(i, window);
+    }
 
     window.display();
 }
 
 void Game::update()
 {
-    hero1->update();
-    hero2->update();
     for(int i = 0; i < numberOfObjects; ++i)
         objects[i].update();
+//    thread first(&Game::foo, this, 0, numberOfObjects/2);
+//    thread second(&Game::foo, this, numberOfObjects/2, numberOfObjects);
+//    first.join();
+//    second.join();
+}
+
+void Game::foo(int start, int end)
+{
+    for(int i = start; i < end; ++i)
+        objects[i].update();
+}
+
+void Game::setGameSpeed(unsigned newGameSpeed)
+{
+    this->currentGameSpeed = newGameSpeed;
+}
+
+Map& Game::getMap()
+{
+    return this->gameMap;
 }

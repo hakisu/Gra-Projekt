@@ -5,17 +5,20 @@
 
 using std::string;
 
+enum class TileType { grass0, grass1, ground0, ground1, sand0, water0 = 6 };
+
 class Tile
 {
 private:
-    string tileType;
-    bool isWalkable;
-    int type;
+    string tileName;
+    bool walkable;
+    TileType type;
 public:
     Tile();
-    Tile(int type, string name);
+    Tile(TileType type, string name, bool walkable = true);
     ~Tile();
-    int getType();
+    TileType getType();
+    bool isWalkable();
 };
 
 #endif // TILE_H
