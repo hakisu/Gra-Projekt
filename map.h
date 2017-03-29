@@ -23,6 +23,9 @@ private:
     // nowe metody
     void mountainGenerator();
     void lakeGenerator(int posX, int posY, int width, int height);
+    void riverGenerator(int currentX, int currentY, int toX, int toY);
+    // wywolywany wewnetrznie prez lakeGenerator(), nie uzywac metody jako samej
+    void sandFillerGenerator(int posX, int posY, int width, int height);
 
 public:
     Map(int widthTilesNumber, int heightTilesNumber);
