@@ -16,7 +16,7 @@ GameEntity::GameEntity(unsigned int posXIndex, unsigned int posYIndex, GraphicsC
     graphicsComponent = graphics;
     entitesNumber++;
 
-    std::cout << "Liczba jednostek : " << entitesNumber << " X : " << this->posX << " Y : " << this->posY << "\n";
+    std::cout << "Liczba jednostek : " << entitesNumber << " X : " << posXIndex << " Y : " << posYIndex << "\n";
 }
 
 GameEntity::GameEntity(const GameEntity& gameEntity)

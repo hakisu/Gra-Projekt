@@ -3,8 +3,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "Game.h"
 #include "Constants.h"
+#include "Game.h"
 #include "GameEntity.h"
 #include "MovementComponent.h"
 
@@ -38,8 +38,8 @@ void InputManager::handleInput(Game& game)
     {
         if(event.type == sf::Event::Resized)
         {
-            std::cout<< "Nowa szerokosc: " << event.size.width << std::endl;
-            std::cout<< "Nowa wysokosc: " << event.size.height << std::endl;
+            std::cout<< "Nowa szerokosc: " << event.size.width << "\n";
+            std::cout<< "Nowa wysokosc: " << event.size.height << "\n";
         }
         if(event.type == sf::Event::Closed)
         {

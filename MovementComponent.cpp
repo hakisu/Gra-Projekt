@@ -22,7 +22,9 @@ void MovementComponent::update(GameEntity& gameEntity)
 
     if(path.size() > 0)
     {
+        // flagi oznaczajace czy polozenie X i Y nowej plytki zostalo osiagniete przez komponent ruchu
         bool posXAchieved = false, posYAchieved = false;
+
         float currentPosX = gameEntity.getPosX();
         float currentPosY = gameEntity.getPosY();
         float destinationPosX = path.back() % Constants::MAP_WIDTH * Constants::TILE_WIDTH;
@@ -83,7 +85,7 @@ void MovementComponent::update(GameEntity& gameEntity)
             if(path.front() != destinationTile)
             {
                 isPathCalculated = false;
-                std::cout << "!!!!!!!!!!!!!!!!!!!!" << " front to : " << path.front() << " dest to : " << destinationTile << std::endl;
+                std::cout << "PosX and PosY achieved " << " front to : " << path.front() << " dest to : " << destinationTile << " Request to find new path sent!\n";
             }
             else
                 path.pop_back();
@@ -112,8 +114,9 @@ unsigned int MovementComponent::getHeuristicDistance(int startTileIndex, int end
 
 void MovementComponent::findNewPath(GameEntity& gameEntity)
 {
-    std::cout << "a ";
-    std::cout << gameEntity.getPosX() << " " << gameEntity.getPosY() << " ";
+    std::cout << "findNewPath() with ";
+    std::cout << gameEntity.getPosX() << " " << gameEntity.getPosY() << " -> ";
+
     std::list<PathStep> closedList;
     std::list<PathStep> openList;
 
@@ -226,17 +229,21 @@ void MovementComponent::findNewPath(GameEntity& gameEntity)
     }
 
     path.clear();
-    while(currentStep->parent != nullptr)
+
+    if(pathFound)
     {
-        path.emplace_back(currentStep->tileIndex);
-        currentStep = currentStep->parent;
+        while(currentStep->parent != nullptr)
+        {
+            path.emplace_back(currentStep->tileIndex);
+            currentStep = currentStep->parent;
+        }
     }
+    else
+        this->destinationTile = startTileIndex;
 
     isPathCalculated = true;
-    std::cout <<"b  ";
 
-    if(pathFound == false)
-        this->destinationTile = startTileIndex;
+    std::cout << " findNewPath() finished\n";
 }
 
 const std::vector<int>& MovementComponent::getPath() const

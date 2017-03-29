@@ -5,7 +5,7 @@
 
 using std::string;
 
-enum class TileType { grass0, grass1, ground0, ground1, sand0, water0 = 6 };
+enum class TileType { grass0, grass1, ground0, ground1, sand0, water0 = 6, rock0 = 7 };
 
 class Tile
 {

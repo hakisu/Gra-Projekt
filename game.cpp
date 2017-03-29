@@ -1,20 +1,19 @@
 #include "Game.h"
 
 #include <chrono>
-#include <iostream>
-#include <thread>
-#include <SFML/Graphics.hpp>
 #include <fstream>
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include <thread>
 #include <typeinfo>
 
-#include "GameLibrary.h"
 #include "Constants.h"
+#include "GameLibrary.h"
+#include "GraphicsComponent.h"
 #include "Map.h"
 #include "MovementComponent.h"
-#include "GraphicsComponent.h"
-#include "MovementComponent.h"
-#include "RandomNumberGenerator.h"
 #include "PathDisplaySystem.h"
+#include "RandomNumberGenerator.h"
 
 using namespace std::chrono;
 using namespace std;
@@ -33,6 +32,7 @@ Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, game
                              new GraphicsComponent());
         objects[i].addComponent(new MovementComponent(gameMap));
     }
+    cout << "\n\n Zaczynamy run() :\n\n";
 }
 
 int Game::run()

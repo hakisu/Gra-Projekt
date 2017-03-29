@@ -1,6 +1,9 @@
 #include "map.h"
-#include "Constants.h"
+
 #include <iostream>
+
+#include "Constants.h"
+#include "RandomNumberGenerator.h"
 #include "Tile.h"
 
 // public methods
@@ -87,14 +90,99 @@ void Map::createMountain(int positionX, int positionY, int width, int height, Ti
 
 void Map::generateMap()
 {
-    fillMapTableOneValue(Tile(TileType::sand0, "piasek_0"));
-    createMountain(0, 0, 5, 3, Tile(TileType::grass1, "trawa_1"));
-    createMountain(30, 50, 20, 2, Tile(TileType::ground1, "ziemia_1"));
-    createMountain(17, 0, 4, 70, Tile(TileType::water0, "woda_0", false));
-    createMountain(45, 5, 26, 20, Tile(TileType::grass0, "trawa_0"));
+    fillMapTableOneValue(Tile(TileType::grass1, "trawa_1"));
+//    createMountain(0, 0, 5, 3, Tile(TileType::grass1, "trawa_1"));
+//    createMountain(30, 50, 20, 2, Tile(TileType::ground1, "ziemia_1"));
+//    createMountain(17, 0, 4, 70, Tile(TileType::water0, "woda_0", false));
+//    createMountain(45, 5, 26, 20, Tile(TileType::grass0, "trawa_0"));
+    mountainGenerator();
+    std::cout << "Skaly zrobione!\n";
+    lakeGenerator(30, 10, 30, 30);
+    std::cout << "Jezioro zrobione!\n";
 }
 
 bool Map::isWalkable(int tileIndex)
 {
     return mapTable[tileIndex].isWalkable();
+}
+
+void Map::mountainGenerator()
+{
+    // generowanie skalek
+
+    int randomNumber = 0;
+
+    for(int y = 1; y < heightTilesNumber - 1; ++y)
+    {
+        for(int x = 1; x < widthTilesNumber - 1; ++x)
+        {
+            randomNumber = RandomNumberGenerator::getIntNumber(0, 8);
+            if(randomNumber == 3 || randomNumber == 4)
+            {
+                mapTable[y * widthTilesNumber + x] = Tile(TileType::rock0, "skala_0", false);
+            }
+        }
+    }
+
+    // usuwanie pojedynczych skalek
+    for(int y = 1; y < heightTilesNumber - 1; ++y)
+    {
+        for(int x = 1; x < widthTilesNumber - 1; ++x)
+        {
+            if(mapTable[y * widthTilesNumber + x].getType() == TileType::rock0)
+            {
+                if((mapTable[y * widthTilesNumber + x - 1].getType() != TileType::rock0) &&
+                   (mapTable[y * widthTilesNumber + x + 1].getType() != TileType::rock0) &&
+                   (mapTable[(y-1) * widthTilesNumber + x].getType() != TileType::rock0) &&
+                   (mapTable[(y+1) * widthTilesNumber + x].getType() != TileType::rock0) &&
+                   (mapTable[(y-1) * widthTilesNumber + x - 1].getType() != TileType::rock0) &&
+                   (mapTable[(y+1) * widthTilesNumber + x + 1].getType() != TileType::rock0) &&
+                   (mapTable[(y-1) * widthTilesNumber + x + 1].getType() != TileType::rock0) &&
+                   (mapTable[(y+1) * widthTilesNumber + x - 1].getType() != TileType::rock0))
+                {
+                    mapTable[y * widthTilesNumber + x] = Tile(TileType::grass0, "trawa_0");
+                }
+            }
+        }
+    }
+}
+
+void Map::lakeGenerator(int posX, int posY, int width, int height)
+{
+    // generowanie jeziora
+    for(int y = posY; y < height + posY - 1; ++y)
+    {
+        int number1 = RandomNumberGenerator::getIntNumber(0, 9) + 3;
+        int number2 = RandomNumberGenerator::getIntNumber(0, 9) + 3;
+
+        int left = RandomNumberGenerator::getIntNumber(0, width / number1 - 1);
+        int right = RandomNumberGenerator::getIntNumber(0, width / number2 - 1);
+        if(y < posY + 4 || y > height - 4)
+        {
+            left = RandomNumberGenerator::getIntNumber(0, width / 2 - 1);
+            right = RandomNumberGenerator::getIntNumber(0, width / 2 - 1);
+        }
+
+        for(int x = posX + left + 1; x < width + posX - right - 1; ++x)
+        {
+            mapTable[y * widthTilesNumber + x] = Tile(TileType::water0, "woda_0", false);
+        }
+    }
+
+    // lake modifier
+
+    for(int y = posY + 1; y < height - 1 + posY; ++y)
+    {
+        for(int x = posX; x < width + posX; ++x)
+        {
+            if(mapTable[y * widthTilesNumber + x].getType() == TileType::water0)
+            {
+                if(mapTable[(y + 1) * widthTilesNumber + x].getType() != TileType::water0 &&
+                   mapTable[(y - 1) * widthTilesNumber + x].getType() != TileType::water0)
+                {
+                    mapTable[y * widthTilesNumber + x] = Tile(TileType::grass1, "trawa_1");
+                }
+            }
+        }
+    }
 }

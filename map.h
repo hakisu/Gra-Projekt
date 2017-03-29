@@ -2,7 +2,6 @@
 #define MAP_H
 
 #include "SFML/Graphics.hpp"
-//#include "tile.h"
 
 class Tile;
 
@@ -20,6 +19,10 @@ private:
     void fillMapTableOneValue(Tile value);
     void createMountain(int positionX, int positionY, int width, int height, Tile value);
     void generateMap();
+
+    // nowe metody
+    void mountainGenerator();
+    void lakeGenerator(int posX, int posY, int width, int height);
 
 public:
     Map(int widthTilesNumber, int heightTilesNumber);
