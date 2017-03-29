@@ -47,7 +47,7 @@ int Game::run()
     auto previousTimeMeasure = high_resolution_clock::now();
     while(window.isOpen())
     {
-        this_thread::sleep_for(1ms);
+        //this_thread::sleep_for(1ms);
         // Pomiar czasu wykonywania 1 klatki gry
         auto newTimeMeasure = high_resolution_clock::now();
         double timeDifference = duration_cast<milliseconds>(newTimeMeasure - previousTimeMeasure).count();
