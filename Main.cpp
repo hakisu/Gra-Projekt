@@ -9,23 +9,29 @@ using namespace std;
 
 int main()
 {
-    try
+    while(true)
     {
-        sf::ContextSettings settings;
-        // Nie uzywamy antyaliasingu, gdyz nawet mala wartosc powyzej 0 powoduje powstawanie lini(artefaktow) miedzy plytkami planszy, kiedy uzywany jest zoom
-        settings.antialiasingLevel = 0;
-        sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2), "Tytul okna", sf::Style::Close, settings);
+        try
+        {
+            sf::ContextSettings settings;
+            // Nie uzywamy antyaliasingu, gdyz nawet mala wartosc powyzej 0 powoduje powstawanie lini(artefaktow) miedzy plytkami planszy, kiedy uzywany jest zoom
+            settings.antialiasingLevel = 0;
+            sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2), "Tytul okna", sf::Style::Close, settings);
 
-        Game *game = new Game(window);
-        game->run();
-        delete game;
+            Game *game = new Game(window);
+            game->run();
+            delete game;
+        }
+        catch(std::exception &e)
+        {
+            cout << e.what() << endl;
+        }
+
+        int a;
+        cin >> a;
+        if(a == 0)
+            break;
     }
-    catch(std::exception &e)
-    {
-        cout << e.what() << endl;
-    }
-    int a;
-    cin >> a;
 
     return 0;
 }

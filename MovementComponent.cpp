@@ -114,6 +114,8 @@ unsigned int MovementComponent::getHeuristicDistance(int startTileIndex, int end
 
 void MovementComponent::findNewPath(GameEntity& gameEntity)
 {
+    try
+    {
     std::cout << "findNewPath() with ";
     std::cout << gameEntity.getPosX() << " " << gameEntity.getPosY() << " -> ";
 
@@ -244,6 +246,11 @@ void MovementComponent::findNewPath(GameEntity& gameEntity)
     isPathCalculated = true;
 
     std::cout << " findNewPath() finished\n";
+    }
+    catch(std::exception &e)
+    {
+        std::cout << "!!!!!!!!!!!!!!!!! Wyjatek " << e.what() << std::endl;
+    }
 }
 
 const std::vector<int>& MovementComponent::getPath() const

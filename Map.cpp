@@ -159,8 +159,8 @@ void Map::lakeGenerator(int posX, int posY, int width, int height)
         int number1 = RandomNumberGenerator::getIntNumber(0, 9) + 3;
         int number2 = RandomNumberGenerator::getIntNumber(0, 9) + 3;
 
-        int left = RandomNumberGenerator::getIntNumber(0, width / number1 - 1);
-        int right = RandomNumberGenerator::getIntNumber(0, width / number2 - 1);
+        int left = RandomNumberGenerator::getIntNumber(0, width / number1);
+        int right = RandomNumberGenerator::getIntNumber(0, width / number2);
         if(y < posY + 4 || y > height - 4)
         {
             left = RandomNumberGenerator::getIntNumber(0, width / 2 - 1);
@@ -175,7 +175,7 @@ void Map::lakeGenerator(int posX, int posY, int width, int height)
 
     // lake modifier
 
-    for(int y = posY + 1; y < height - 1 + posY; ++y)
+    for(int y = posY; y < height + posY; ++y)
     {
         for(int x = posX; x < width + posX; ++x)
         {
@@ -185,6 +185,14 @@ void Map::lakeGenerator(int posX, int posY, int width, int height)
                    mapTable[(y - 1) * widthTilesNumber + x].getType() != TileType::water0)
                 {
                     mapTable[y * widthTilesNumber + x] = Tile(TileType::grass1, "trawa_1");
+                }
+            }
+            if(mapTable[y * widthTilesNumber + x].getType() != TileType::water0)
+            {
+                if(mapTable[(y + 1) * widthTilesNumber + x].getType() == TileType::water0 &&
+                   mapTable[(y-1) * widthTilesNumber + x ].getType() == TileType::water0)
+                {
+                    mapTable[y * widthTilesNumber + x] = Tile(TileType::water0,"water_0");
                 }
             }
         }
@@ -197,7 +205,7 @@ void Map::lakeGenerator(int posX, int posY, int width, int height)
 void Map::riverGenerator(int currentX, int currentY, int toX, int toY)
 {
     int randomNumber = 0;
-    int number = 2;
+    int number = 5;
 
     // zmienilem tu tymczasowo AND na OR
     while(currentX != toX || currentY != toY)
@@ -237,9 +245,9 @@ void Map::riverGenerator(int currentX, int currentY, int toX, int toY)
 
 void Map::sandFillerGenerator(int posX, int posY, int width, int height)
 {
-    for(int y = posY; y < posY + height; ++y)
+    for(int y = posY; y < posY + height - 1; ++y)
     {
-        for(int x = posX; x < posX + width; ++x)
+        for(int x = posX + 1; x < posX + width - 1; ++x)
         {
             if(mapTable[y * widthTilesNumber + x].getType() == TileType::water0)
             {
@@ -261,7 +269,7 @@ void Map::sandFillerGenerator(int posX, int posY, int width, int height)
                 }
 
                 // diagonalne
-                if(mapTable[(y + 1) * widthTilesNumber + x +1 ].getType() != TileType::water0)
+                if(mapTable[(y + 1) * widthTilesNumber + x + 1 ].getType() != TileType::water0)
                 {
                     mapTable[(y + 1) * widthTilesNumber + x + 1] = Tile(TileType::sand0, "piasek_0");
                 }
