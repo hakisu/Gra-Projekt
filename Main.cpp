@@ -27,6 +27,7 @@ int main()
             cout << e.what() << endl;
         }
 
+        cout << "Wpisz 0 aby wylaczyc gre, inna cyfre aby stworzyc nowa gre: \n";
         int a;
         cin >> a;
         if(a == 0)

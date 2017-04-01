@@ -28,6 +28,7 @@ void PathDisplaySystem::render(GameEntity& gameEntity, sf::RenderWindow& window)
     {
         const vector<int> &currentPath = movementComponentPtr->getPath();
 
+        // do poprawienia, aby kolor byl staly dla sciezki po wylosowaniu
 //        sf::Color pathColor(RandomNumberGenerator::getIntNumber(0, 255), RandomNumberGenerator::getIntNumber(0, 255), RandomNumberGenerator::getIntNumber(0, 255));
         sf::Color pathColor(sf::Color::Red);
         for(auto &i : currentPath)

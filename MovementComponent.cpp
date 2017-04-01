@@ -114,8 +114,6 @@ unsigned int MovementComponent::getHeuristicDistance(int startTileIndex, int end
 
 void MovementComponent::findNewPath(GameEntity& gameEntity)
 {
-    try
-    {
     std::cout << "findNewPath() with ";
     std::cout << gameEntity.getPosX() << " " << gameEntity.getPosY() << " -> ";
 
@@ -155,16 +153,16 @@ void MovementComponent::findNewPath(GameEntity& gameEntity)
         int currentTileIndex = currentStep->tileIndex;
 
         // plytka gorna
-        if(gameMap.isWalkable(currentTileIndex - Constants::MAP_WIDTH) && currentTileIndex - Constants::MAP_WIDTH > 0)
+        if(currentTileIndex - Constants::MAP_WIDTH > 0 && gameMap.isWalkable(currentTileIndex - Constants::MAP_WIDTH))
             adjacentTilesIndexes.emplace_back(currentTileIndex - Constants::MAP_WIDTH);
         // plytka prawa
-        if(gameMap.isWalkable(currentTileIndex + 1) && ((currentTileIndex + 1) % Constants::MAP_WIDTH) != 0)
+        if(((currentTileIndex + 1) % Constants::MAP_WIDTH) != 0 && gameMap.isWalkable(currentTileIndex + 1))
             adjacentTilesIndexes.emplace_back(currentTileIndex + 1);
         // plytka dolna
-        if(gameMap.isWalkable(currentTileIndex + Constants::MAP_WIDTH) && currentTileIndex + Constants::MAP_WIDTH < Constants::MAP_WIDTH * Constants::MAP_HEIGHT)
+        if(currentTileIndex + Constants::MAP_WIDTH < Constants::MAP_WIDTH * Constants::MAP_HEIGHT && gameMap.isWalkable(currentTileIndex + Constants::MAP_WIDTH))
             adjacentTilesIndexes.emplace_back(currentTileIndex + Constants::MAP_WIDTH);
         // plytka lewa
-        if(gameMap.isWalkable(currentTileIndex -1) && (currentTileIndex % Constants::MAP_WIDTH) != 0)
+        if((currentTileIndex % Constants::MAP_WIDTH) != 0 && gameMap.isWalkable(currentTileIndex - 1))
             adjacentTilesIndexes.emplace_back(currentTileIndex - 1);
 
         // wykonujemy dla kazdego pola sasiadujacego (przechodzimy przez caly kontener adjacentTilesIndexes)
@@ -246,11 +244,6 @@ void MovementComponent::findNewPath(GameEntity& gameEntity)
     isPathCalculated = true;
 
     std::cout << " findNewPath() finished\n";
-    }
-    catch(std::exception &e)
-    {
-        std::cout << "!!!!!!!!!!!!!!!!! Wyjatek " << e.what() << std::endl;
-    }
 }
 
 const std::vector<int>& MovementComponent::getPath() const

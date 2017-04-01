@@ -91,10 +91,6 @@ void Map::createMountain(int positionX, int positionY, int width, int height, Ti
 void Map::generateMap()
 {
     fillMapTableOneValue(Tile(TileType::grass1, "trawa_1"));
-//    createMountain(0, 0, 5, 3, Tile(TileType::grass1, "trawa_1"));
-//    createMountain(30, 50, 20, 2, Tile(TileType::ground1, "ziemia_1"));
-//    createMountain(17, 0, 4, 70, Tile(TileType::water0, "woda_0", false));
-//    createMountain(45, 5, 26, 20, Tile(TileType::grass0, "trawa_0"));
     mountainGenerator();
     std::cout << "Skaly zrobione!\n";
     lakeGenerator(30, 10, 30, 30);
