@@ -285,3 +285,17 @@ void Map::sandFillerGenerator(int posX, int posY, int width, int height)
         }
     }
 }
+
+int Map::getAreaNumber(int tileIndex)
+{
+    return mapTable[tileIndex].getAreaNumber();
+}
+
+void Map::generateMapAreasForPathFinding()
+{
+    // mapTable to zwykla tablica naszyk Plytek o rozmiarach(ilosc kafelkow w szerokosci i wysokosci) : widthTilesNumber, heightTilesNumber
+    // do sprawdzania nr obszaru w kazdym kafelku masz metode
+    // mapTable[5].getAreaNumber()   i do ustawiania nowego nr obszaru masz mapTable[5].setAreaNumber(2)
+    // masz jeszcze mapTable[5].isWalkable()  do sprawdzania czy przez kafelek da sie przejsc czy nie
+}
+

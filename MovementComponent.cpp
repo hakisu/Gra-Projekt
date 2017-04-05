@@ -117,8 +117,10 @@ void MovementComponent::findNewPath(GameEntity& gameEntity)
     std::cout << "findNewPath() with ";
     std::cout << gameEntity.getPosX() << " " << gameEntity.getPosY() << " -> ";
 
-    std::list<PathStep> closedList;
+    std::vector<PathStep> closedList;
+    closedList.reserve(Constants::MAP_WIDTH * Constants::MAP_HEIGHT);
     std::list<PathStep> openList;
+//    std::vector<PathStep> openList;
 
     int endTileIndex = destinationTile;
     int startPosX = gameEntity.getPosX() / Constants::TILE_WIDTH;

@@ -6,11 +6,12 @@ Tile::Tile()
     walkable = true;
 }
 
-Tile::Tile(TileType type, string name, bool walkable)
+Tile::Tile(TileType type, string name, bool walkable, int areaNumber)
 {
     this->type = type;
     this->tileName = name;
     this->walkable = walkable;
+    this->areaNumber = areaNumber;
 }
 
 Tile::~Tile()
@@ -26,4 +27,15 @@ TileType Tile::getType()
 bool Tile::isWalkable()
 {
     return walkable;
+}
+
+
+int Tile::getAreaNumber()
+{
+    return this->areaNumber;
+}
+
+void Tile::setAreaNumber(int areaNumber)
+{
+    this->areaNumber = areaNumber;
 }

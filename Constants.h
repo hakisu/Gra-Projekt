@@ -19,7 +19,7 @@ public:
     const static unsigned int MAP_TILESET_GRAPHICS_INITIAL_POSITION = 3;
 
     // wtepna ilosc obiektow do zarezerwowania
-    const static unsigned int INITIAL_OBJECTS_RESERVED = 1;
+    const static unsigned int INITIAL_OBJECTS_RESERVED = 5;
 };
 
 #endif // CONSTANTS_H

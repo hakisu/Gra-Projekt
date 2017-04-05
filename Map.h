@@ -27,11 +27,15 @@ private:
     // wywolywany wewnetrznie prez lakeGenerator(), nie uzywac metody jako samej
     void sandFillerGenerator(int posX, int posY, int width, int height);
 
+    // metoda to tworzenia obszarow dla algorytmu znajdywania drogii (do zrobienia w pliku Map.cpp)
+    void generateMapAreasForPathFinding();
+
 public:
     Map(int widthTilesNumber, int heightTilesNumber);
     ~Map();
 
     bool isWalkable(int tileIndex);
+    int getAreaNumber(int tileIndex);
 };
 
 #endif // MAP_H
