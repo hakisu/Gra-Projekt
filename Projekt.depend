@@ -724,3 +724,126 @@
 	"MovementComponent.h"
 	"RandomNumberGenerator.h"
 
+1491424925 source:c:\users\szali\onedrive\gra-projekt\game.cpp
+	"Game.h"
+	<chrono>
+	<fstream>
+	<iostream>
+	<SFML/Graphics.hpp>
+	<thread>
+	<typeinfo>
+	"Constants.h"
+	"GameLibrary.h"
+	"GraphicsComponent.h"
+	"Map.h"
+	"MovementComponent.h"
+	"PathDisplaySystem.h"
+	"RandomNumberGenerator.h"
+
+1491420961 c:\users\szali\onedrive\gra-projekt\game.h
+	"GameClock.h"
+	"GameEntity.h"
+	"InputManager.h"
+	"Map.h"
+
+1489956573 c:\users\szali\onedrive\gra-projekt\inputmanager.h
+
+1491409984 c:\users\szali\onedrive\gra-projekt\map.h
+	"SFML/Graphics.hpp"
+
+1490690449 c:\users\szali\onedrive\gra-projekt\gameentity.h
+	<vector>
+
+1491408872 c:\users\szali\onedrive\gra-projekt\constants.h
+
+1490084531 c:\users\szali\onedrive\gra-projekt\gamelibrary.h
+	"GraphicsComponent.h"
+	"GameEntity.h"
+
+1489859247 c:\users\szali\onedrive\gra-projekt\graphicscomponent.h
+	"SFML/Graphics.hpp"
+	"Component.h"
+
+1490118881 c:\users\szali\onedrive\gra-projekt\component.h
+
+1490731038 c:\users\szali\onedrive\gra-projekt\movementcomponent.h
+	<vector>
+	<list>
+	"Component.h"
+	"Map.h"
+
+1490742680 c:\users\szali\onedrive\gra-projekt\pathdisplaysystem.h
+
+1489623727 c:\users\szali\onedrive\gra-projekt\randomnumbergenerator.h
+	<random>
+
+1490802877 source:c:\users\szali\onedrive\gra-projekt\gameentity.cpp
+	"GameEntity.h"
+	<iostream>
+	"Constants.h"
+	"GraphicsComponent.h"
+
+1490214514 source:c:\users\szali\onedrive\gra-projekt\gamelibrary.cpp
+	"GameLibrary.h"
+
+1490640714 source:c:\users\szali\onedrive\gra-projekt\graphicscomponent.cpp
+	"GameEntity.h"
+	"GraphicsComponent.h"
+	<iostream>
+
+1490804151 source:c:\users\szali\onedrive\gra-projekt\inputmanager.cpp
+	"InputManager.h"
+	<iostream>
+	<SFML/Graphics.hpp>
+	"Constants.h"
+	"Game.h"
+	"GameEntity.h"
+	"MovementComponent.h"
+
+1490870331 source:c:\users\szali\onedrive\gra-projekt\main.cpp
+	<iostream>
+	<thread>
+	"Component.h"
+	"Game.h"
+	"Map.h"
+
+1491408864 source:c:\users\szali\onedrive\gra-projekt\movementcomponent.cpp
+	"MovementComponent.h"
+	<iostream>
+	"GameEntity.h"
+	"Constants.h"
+	"RandomNumberGenerator.h"
+
+1490867413 source:c:\users\szali\onedrive\gra-projekt\pathdisplaysystem.cpp
+	"PathDisplaySystem.h"
+	<iostream>
+	<typeinfo>
+	"Constants.h"
+	"GameEntity.h"
+	"MovementComponent.h"
+	"RandomNumberGenerator.h"
+
+1490017263 source:c:\users\szali\onedrive\gra-projekt\randomnumbergenerator.cpp
+	"RandomNumberGenerator.h"
+	<chrono>
+
+1491409313 source:c:\users\szali\onedrive\gra-projekt\tile.cpp
+	"Tile.h"
+
+1491409285 c:\users\szali\onedrive\gra-projekt\tile.h
+	<string>
+
+1491410436 source:c:\users\szali\onedrive\gra-projekt\map.cpp
+	"Map.h"
+	<iostream>
+	"Constants.h"
+	"RandomNumberGenerator.h"
+	"Tile.h"
+
+1491423441 source:c:\users\szali\onedrive\gra-projekt\gameclock.cpp
+	"GameClock.h"
+	<sstream>
+
+1491422590 c:\users\szali\onedrive\gra-projekt\gameclock.h
+	<string>
+

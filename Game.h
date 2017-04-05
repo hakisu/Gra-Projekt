@@ -1,17 +1,23 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "GameClock.h"
+#include "GameEntity.h"
 #include "InputManager.h"
 #include "Map.h"
-#include "GameEntity.h"
+
+using sf::RenderWindow;
+using sf::View;
 
 class Game
 {
 private:
-    sf::RenderWindow& window;
+    RenderWindow& window;
     InputManager inputManager;
     Map gameMap;
-    sf::View gameCamera;
+    View gameCamera;
+    GameClock gameClock;
+
     unsigned int currentGameSpeed;
 
 public:

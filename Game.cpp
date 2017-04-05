@@ -61,7 +61,11 @@ int Game::run()
         {
             // silnik ai,physics...
             if(testPause == false)
+            {
                 update();
+                gameClock.updateWithOneGameTick();
+                cout << gameClock.getFullDate() << endl;
+            }
             timeDelay -= currentGameSpeed;
         }
 
@@ -92,6 +96,16 @@ void Game::render(double timeProgressValue)
         if(displayPath)
             PathDisplaySystem::render(i, window);
     }
+
+    sf::RectangleShape a;
+
+    a.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
+    a.setPosition(0, 0);
+    a.setFillColor(sf::Color(0, 0, 0, (255.0 / 59) * gameClock.getMinute()));
+
+    window.setView(window.getDefaultView());
+    window.draw(a);
+    window.setView(gameCamera);
 
     window.display();
 }

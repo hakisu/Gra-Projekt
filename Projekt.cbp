@@ -57,6 +57,8 @@
 		<Unit filename="Constants.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
+		<Unit filename="GameClock.cpp" />
+		<Unit filename="GameClock.h" />
 		<Unit filename="GameEntity.cpp" />
 		<Unit filename="GameEntity.h" />
 		<Unit filename="GameLibrary.cpp" />
