@@ -1,6 +1,7 @@
 #include "Map.h"
 
 #include <iostream>
+#include <vector>
 
 #include "Constants.h"
 #include "RandomNumberGenerator.h"
@@ -99,6 +100,7 @@ void Map::generateMap()
     std::cout << "Jezioro zrobione!\n";
     riverGenerator(0, 50, RandomNumberGenerator::getIntNumber(Constants::MAP_WIDTH / 2 , Constants::MAP_WIDTH - 1), RandomNumberGenerator::getIntNumber(5, Constants::MAP_HEIGHT - 10));
     std::cout << "Rzeka zrobiona!\n";
+    generateMapAreasForPathFinding();
 }
 
 bool Map::isWalkable(int tileIndex)
@@ -297,5 +299,112 @@ void Map::generateMapAreasForPathFinding()
     // do sprawdzania nr obszaru w kazdym kafelku masz metode
     // mapTable[5].getAreaNumber()   i do ustawiania nowego nr obszaru masz mapTable[5].setAreaNumber(2)
     // masz jeszcze mapTable[5].isWalkable()  do sprawdzania czy przez kafelek da sie przejsc czy nie
+
+    unsigned int tilesNumber = widthTilesNumber * heightTilesNumber;
+
+    std::vector< int > idNumbers;
+    for(unsigned int i = 0; i < tilesNumber; ++i)
+        idNumbers.push_back(0);
+
+
+    int id = 1;
+    int tmp = 0;
+    int numberOld = 0;
+    int numberNew = 0;
+
+    for(unsigned int y = 0; y < heightTilesNumber; ++y)
+    {
+        for(unsigned int x = 0; x < widthTilesNumber; ++x)
+        {
+            if(y == 0)
+            {
+                if(mapTable[y * widthTilesNumber + x].isWalkable() == true)
+                {
+                    if(x == 0)
+                    {
+                        mapTable[y * widthTilesNumber + x].setAreaNumber( id );
+                        ++idNumbers[ id ];
+                    }
+                    else
+                    {
+                        if(mapTable[y * widthTilesNumber + x].isWalkable() == false)
+                        {
+                            ++id;
+                            mapTable[y * widthTilesNumber + x].setAreaNumber( id );
+                            ++idNumbers[ id ];
+                        }
+                        else
+                        {
+                            mapTable[y * widthTilesNumber + x].setAreaNumber( mapTable[y * widthTilesNumber + x - 1].getAreaNumber() );
+                            ++idNumbers[ mapTable[y * widthTilesNumber + x - 1].getAreaNumber() ];
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if(x == 0)
+                {
+                    if(mapTable[y * widthTilesNumber + x].isWalkable() == true)
+                    {
+                        if(mapTable[(y - 1) * widthTilesNumber + x].isWalkable() == true)
+                        {
+                            mapTable[y * widthTilesNumber + x].setAreaNumber( mapTable[(y - 1) * widthTilesNumber + x].getAreaNumber() );
+                            ++idNumbers[ mapTable[(y - 1) * widthTilesNumber + x].getAreaNumber() ];
+                        }
+                        else
+                        {
+                            ++id;
+                            mapTable[y * widthTilesNumber + x].setAreaNumber( id );
+                            ++idNumbers[ id ];
+                        }
+                    }
+                }
+                else
+                {
+                    if(mapTable[y * widthTilesNumber + x].isWalkable() == true)
+                    {
+                        if(mapTable[(y - 1) * widthTilesNumber + x].isWalkable() == true)
+                        {
+                            mapTable[y * widthTilesNumber + x].setAreaNumber( mapTable[(y - 1) * widthTilesNumber + x].getAreaNumber() );
+                            ++idNumbers[ mapTable[(y - 1) * widthTilesNumber + x].getAreaNumber() ];
+
+
+                            if(x > 0 && mapTable[y * widthTilesNumber + x - 1].isWalkable() == true && mapTable[y * widthTilesNumber + x].getAreaNumber() != mapTable[y * widthTilesNumber + x - 1].getAreaNumber())
+                            {
+
+                                numberNew = mapTable[y * widthTilesNumber + x].getAreaNumber();
+                                numberOld = mapTable[ y * widthTilesNumber + x - 1].getAreaNumber();
+
+                                long int position = y * widthTilesNumber + x;
+
+                                while(position > 0 && idNumbers[ numberOld ] > 0)
+                                {
+                                    if(mapTable[ position ].getAreaNumber() == numberOld)
+                                    {
+                                        mapTable[ position ].setAreaNumber( numberNew );
+                                        ++idNumbers[ numberNew ];
+                                        --idNumbers[ numberOld ];
+                                    }
+                                    --position;
+                                }
+                            }
+                        }
+                        else if(mapTable[y * widthTilesNumber + x - 1].isWalkable() == true)
+                        {
+                            mapTable[y * widthTilesNumber + x].setAreaNumber( mapTable[y * widthTilesNumber + x - 1].getAreaNumber() );
+                            ++idNumbers[ mapTable[y * widthTilesNumber + x - 1].getAreaNumber() ];
+                        }
+                        else
+                        {
+                            ++id;
+                            mapTable[y * widthTilesNumber + x].setAreaNumber( id );
+                            ++idNumbers[ id ];
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
