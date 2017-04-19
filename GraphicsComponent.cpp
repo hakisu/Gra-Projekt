@@ -10,6 +10,15 @@ GraphicsComponent::GraphicsComponent()
     sprite.setTexture(texture);
 }
 
+GraphicsComponent * GraphicsComponent::clone() const
+{
+    return new GraphicsComponent(*this);
+}
+
+void GraphicsComponent::acceptMessage(MessageType messageType)
+{
+}
+
 void GraphicsComponent::render(GameEntity& gameEntity, sf::RenderWindow& window, double timeProgressValue)
 {
     sprite.setPosition(gameEntity.getPosX(), gameEntity.getPosY());

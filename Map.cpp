@@ -100,6 +100,7 @@ void Map::generateMap()
     std::cout << "Jezioro zrobione!\n";
     riverGenerator(0, 50, RandomNumberGenerator::getIntNumber(Constants::MAP_WIDTH / 2 , Constants::MAP_WIDTH - 1), RandomNumberGenerator::getIntNumber(5, Constants::MAP_HEIGHT - 10));
     std::cout << "Rzeka zrobiona!\n";
+
     generateMapAreasForPathFinding();
 }
 
@@ -295,26 +296,20 @@ int Map::getAreaNumber(int tileIndex)
 
 void Map::generateMapAreasForPathFinding()
 {
-    // mapTable to zwykla tablica naszyk Plytek o rozmiarach(ilosc kafelkow w szerokosci i wysokosci) : widthTilesNumber, heightTilesNumber
-    // do sprawdzania nr obszaru w kazdym kafelku masz metode
-    // mapTable[5].getAreaNumber()   i do ustawiania nowego nr obszaru masz mapTable[5].setAreaNumber(2)
-    // masz jeszcze mapTable[5].isWalkable()  do sprawdzania czy przez kafelek da sie przejsc czy nie
-
     unsigned int tilesNumber = widthTilesNumber * heightTilesNumber;
 
-    std::vector< int > idNumbers;
+    std::vector<int> idNumbers;
     for(unsigned int i = 0; i < tilesNumber; ++i)
         idNumbers.push_back(0);
 
 
     int id = 1;
-    int tmp = 0;
     int numberOld = 0;
     int numberNew = 0;
 
-    for(unsigned int y = 0; y < heightTilesNumber; ++y)
+    for(int y = 0; y < heightTilesNumber; ++y)
     {
-        for(unsigned int x = 0; x < widthTilesNumber; ++x)
+        for(int x = 0; x < widthTilesNumber; ++x)
         {
             if(y == 0)
             {
@@ -322,7 +317,7 @@ void Map::generateMapAreasForPathFinding()
                 {
                     if(x == 0)
                     {
-                        mapTable[y * widthTilesNumber + x].setAreaNumber( id );
+                        mapTable[y * widthTilesNumber + x].setAreaNumber(id);
                         ++idNumbers[ id ];
                     }
                     else
@@ -392,14 +387,14 @@ void Map::generateMapAreasForPathFinding()
                         }
                         else if(mapTable[y * widthTilesNumber + x - 1].isWalkable() == true)
                         {
-                            mapTable[y * widthTilesNumber + x].setAreaNumber( mapTable[y * widthTilesNumber + x - 1].getAreaNumber() );
+                            mapTable[y * widthTilesNumber + x].setAreaNumber( mapTable[y * widthTilesNumber + x - 1].getAreaNumber());
                             ++idNumbers[ mapTable[y * widthTilesNumber + x - 1].getAreaNumber() ];
                         }
                         else
                         {
                             ++id;
-                            mapTable[y * widthTilesNumber + x].setAreaNumber( id );
-                            ++idNumbers[ id ];
+                            mapTable[y * widthTilesNumber + x].setAreaNumber(id);
+                            ++idNumbers[id];
                         }
                     }
                 }

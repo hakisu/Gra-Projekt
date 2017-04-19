@@ -1,7 +1,11 @@
 #ifndef GAME_ENTITY_H
 #define GAME_ENTITY_H
 
+#include <memory>
 #include <vector>
+
+#include "Component.h"
+
 class Component;
 class GraphicsComponent;
 namespace sf
@@ -16,9 +20,9 @@ private:
     float posY;
     float currentChangeInPosX;
     float currentChangeInPosY;
-    GraphicsComponent *graphicsComponent;
-//    std::vector<Component*> components;
+    std::unique_ptr<GraphicsComponent> graphicsComponent;
     static int entitesNumber;
+
 public:
     GameEntity(unsigned int posXIndex, unsigned int posYIndex, GraphicsComponent* graphics);
     GameEntity(const GameEntity& gameEntity);
@@ -35,10 +39,11 @@ public:
 
     void addComponent(Component* newComponent);
     void render(sf::RenderWindow& window, double timeProgressValue);
+    void sendMessage(MessageType messageType);
     void update();
 
     // temp
-    std::vector<Component*> components;
+    std::vector<std::unique_ptr<Component>> components;
 };
 
 #endif // GAME_ENTITY_H

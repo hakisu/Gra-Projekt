@@ -1,10 +1,17 @@
 #include "MovementComponent.h"
 
 #include <iostream>
+#include <limits>
 
 #include "GameEntity.h"
 #include "Constants.h"
+#include "GameLibrary.h"
 #include "RandomNumberGenerator.h"
+
+
+// temp
+#include <chrono>
+using namespace std::chrono;
 
 MovementComponent::MovementComponent(Map& gameMap) : gameMap(gameMap)
 {
@@ -13,11 +20,23 @@ MovementComponent::MovementComponent(Map& gameMap) : gameMap(gameMap)
     destinationTile = RandomNumberGenerator::getIntNumber(0, Constants::MAP_WIDTH * Constants::MAP_HEIGHT - 1);
 }
 
+MovementComponent * MovementComponent::clone() const
+{
+    return new MovementComponent(*this);
+}
+
 void MovementComponent::update(GameEntity& gameEntity)
 {
     if(!isPathCalculated)
     {
-        findNewPath(gameEntity);
+        int startTileIndex = gl::calculateTileIndex(gameEntity.getPosX(), gameEntity.getPosY());
+        if (gameMap.getAreaNumber(startTileIndex) == gameMap.getAreaNumber(destinationTile))
+            findNewPath(gameEntity);
+        else
+        {
+            destinationTile = startTileIndex;
+            isPathCalculated = true;
+        }
     }
 
     if(path.size() > 0)
@@ -86,11 +105,24 @@ void MovementComponent::update(GameEntity& gameEntity)
             {
                 isPathCalculated = false;
                 std::cout << "PosX and PosY achieved " << " front to : " << path.front() << " dest to : " << destinationTile << " Request to find new path sent!\n";
+                path.clear();
             }
             else
                 path.pop_back();
         }
     }
+    else
+    {
+        if(isPathCalculated == true && destinationTile == gl::calculateTileIndex(gameEntity.getPosX(), gameEntity.getPosY()))
+        {
+            cout << "wysylamy info !!!!!!!!!!!!!!!!!!" << endl;
+            gameEntity.sendMessage(MessageType::destinationReached);
+        }
+    }
+}
+
+void MovementComponent::acceptMessage(MessageType messageType)
+{
 }
 
 void MovementComponent::setDestinationTile(int tileIndex)
@@ -112,15 +144,160 @@ unsigned int MovementComponent::getHeuristicDistance(int startTileIndex, int end
     return std::abs(endPosX - startPosX) + std::abs(endPosY - startPosY);
 }
 
+//void MovementComponent::findNewPath(GameEntity& gameEntity)
+//{
+//    auto timer1 = high_resolution_clock::now();
+//    std::cout << "findNewPath() with ";
+//    std::cout << gameEntity.getPosX() << " " << gameEntity.getPosY() << " -> ";
+//
+//    std::vector<PathStep> closedList;
+//    closedList.reserve(Constants::MAP_WIDTH * Constants::MAP_HEIGHT);
+//    std::list<PathStep> openList;
+////    std::vector<PathStep> openList;
+//
+//    int endTileIndex = destinationTile;
+//    int startPosX = gameEntity.getPosX() / Constants::TILE_WIDTH;
+//    int startPosY = gameEntity.getPosY() / Constants::TILE_HEIGHT;
+//    // indeks w tablicy 1-wymiarowej z ktorego zaczynamy szukac drogi do indeksu endTileIndex
+//    int startTileIndex = startPosX + startPosY * Constants::MAP_WIDTH;
+//
+//    openList.emplace_front(startTileIndex, 0, 0);
+//
+//    PathStep* currentStep = nullptr;
+//
+//    bool pathFound = false;
+//
+//    while(openList.size() > 0)
+//    {
+//        currentStep = &openList.front();
+//
+//        closedList.emplace_back(currentStep->tileIndex, currentStep->pathScoreG, currentStep->pathScoreH, currentStep->parent);
+//        openList.pop_front();
+//
+//        currentStep = &closedList.back();
+//
+//        if(currentStep->tileIndex == endTileIndex)
+//        {
+//            pathFound = true;
+//            break;
+//        }
+//
+//        // dodajemy wszystkie poprawne, sasiadujace z naszym obecnym kafelkiem kafelki do kontenera adjacentTilesIndexes
+//        std::vector<int> adjacentTilesIndexes;
+//        adjacentTilesIndexes.reserve(4);
+//        int currentTileIndex = currentStep->tileIndex;
+//
+//        // plytka gorna
+//        if(currentTileIndex - Constants::MAP_WIDTH > 0 && gameMap.isWalkable(currentTileIndex - Constants::MAP_WIDTH))
+//            adjacentTilesIndexes.emplace_back(currentTileIndex - Constants::MAP_WIDTH);
+//        // plytka prawa
+//        if(((currentTileIndex + 1) % Constants::MAP_WIDTH) != 0 && gameMap.isWalkable(currentTileIndex + 1))
+//            adjacentTilesIndexes.emplace_back(currentTileIndex + 1);
+//        // plytka dolna
+//        if(currentTileIndex + Constants::MAP_WIDTH < Constants::MAP_WIDTH * Constants::MAP_HEIGHT && gameMap.isWalkable(currentTileIndex + Constants::MAP_WIDTH))
+//            adjacentTilesIndexes.emplace_back(currentTileIndex + Constants::MAP_WIDTH);
+//        // plytka lewa
+//        if((currentTileIndex % Constants::MAP_WIDTH) != 0 && gameMap.isWalkable(currentTileIndex - 1))
+//            adjacentTilesIndexes.emplace_back(currentTileIndex - 1);
+//
+//        // wykonujemy dla kazdego pola sasiadujacego (przechodzimy przez caly kontener adjacentTilesIndexes)
+//        for(unsigned int i = 0; i < adjacentTilesIndexes.size(); ++i)
+//        {
+//            // sprawdzamy czy dany kafelek z tych sasiadujacych byl juz w zamknietej liscie
+//            bool isInClosedList = false;
+//            for(auto it = closedList.begin(); it != closedList.end(); ++it)
+//            {
+//                if((*it).tileIndex == adjacentTilesIndexes[i])
+//                {
+//                    isInClosedList = true;
+//                    break;
+//                }
+//            }
+//            if(isInClosedList)
+//                continue;
+//
+//            // sprawdzamy czy dany kafelek z tych sasiadujacych byl juz w otwartej liscie
+//            bool isInOpenList = false;
+//            PathStep* adjacentTile = nullptr;
+//
+//            for(auto it = openList.begin(); it != openList.end(); ++it)
+//            {
+//                if((*it).tileIndex == adjacentTilesIndexes[i])
+//                {
+//                    isInOpenList = true;
+//                    adjacentTile = &(*it);
+//                    break;
+//                }
+//            }
+//            if(!isInOpenList)
+//            {
+//                if(openList.size() == 0)
+//                {
+//                    openList.emplace_front(adjacentTilesIndexes[i], currentStep->pathScoreG + 1, getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex), currentStep);
+//                }
+//                else if(openList.back().getScoreF() < getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex) + currentStep->pathScoreG + 1)
+//                {
+//                    openList.emplace_back(adjacentTilesIndexes[i], currentStep->pathScoreG + 1, getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex), currentStep);
+//                }
+//                else
+//                {
+//                    for(auto it = openList.begin(); it != openList.end(); ++it)
+//                    {
+//                        if((*it).getScoreF() >= getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex) + currentStep->pathScoreG + 1)
+//                        {
+//                            openList.emplace(it, adjacentTilesIndexes[i], currentStep->pathScoreG + 1,
+//                                             getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex), currentStep);
+//                            break;
+//                        }
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                if(currentStep->pathScoreG + 1 <= adjacentTile->pathScoreG)
+//                {
+//                    adjacentTile->pathScoreG = currentStep->pathScoreG + 1;
+//                    adjacentTile->parent = currentStep;
+//                }
+//            }
+//        }
+//    }
+//
+//    path.clear();
+//
+//    if(pathFound)
+//    {
+//        while(currentStep->parent != nullptr)
+//        {
+//            path.emplace_back(currentStep->tileIndex);
+//            currentStep = currentStep->parent;
+//        }
+//    }
+//    else
+//        this->destinationTile = startTileIndex;
+//
+//    isPathCalculated = true;
+//
+//    std::cout << " findNewPath() finished\n";
+//    auto timer2 = high_resolution_clock::now();
+//    auto wynikPomiaru = duration_cast<milliseconds>(timer2 - timer1).count();
+//    std::cout << "Pomiar wynik to : " << wynikPomiaru << "\n";
+//}
+
+const std::vector<int>& MovementComponent::getPath() const
+{
+    return path;
+}
+
 void MovementComponent::findNewPath(GameEntity& gameEntity)
 {
+    auto timer1 = high_resolution_clock::now();
     std::cout << "findNewPath() with ";
     std::cout << gameEntity.getPosX() << " " << gameEntity.getPosY() << " -> ";
 
     std::vector<PathStep> closedList;
     closedList.reserve(Constants::MAP_WIDTH * Constants::MAP_HEIGHT);
-    std::list<PathStep> openList;
-//    std::vector<PathStep> openList;
+    std::vector<PathStep> openList;
 
     int endTileIndex = destinationTile;
     int startPosX = gameEntity.getPosX() / Constants::TILE_WIDTH;
@@ -128,7 +305,7 @@ void MovementComponent::findNewPath(GameEntity& gameEntity)
     // indeks w tablicy 1-wymiarowej z ktorego zaczynamy szukac drogi do indeksu endTileIndex
     int startTileIndex = startPosX + startPosY * Constants::MAP_WIDTH;
 
-    openList.emplace_front(startTileIndex, 0, 0);
+    openList.emplace_back(startTileIndex, 0, 0);
 
     PathStep* currentStep = nullptr;
 
@@ -136,10 +313,21 @@ void MovementComponent::findNewPath(GameEntity& gameEntity)
 
     while(openList.size() > 0)
     {
-        currentStep = &openList.front();
+        unsigned int minimalValue = std::numeric_limits<unsigned int>::max();
+        for(auto &it : openList)
+        {
+            if(it.getScoreF() < minimalValue)
+            {
+                minimalValue = it.getScoreF();
+                currentStep = &it;
+            }
+        }
 
         closedList.emplace_back(currentStep->tileIndex, currentStep->pathScoreG, currentStep->pathScoreH, currentStep->parent);
-        openList.pop_front();
+
+        // wydajne usuniecie elementu z wektora, poprzez zamiane z ostatnim i pop ostatniego
+        std::swap(*currentStep, openList.back());
+        openList.pop_back();
 
         currentStep = &closedList.back();
 
@@ -198,26 +386,8 @@ void MovementComponent::findNewPath(GameEntity& gameEntity)
             }
             if(!isInOpenList)
             {
-                if(openList.size() == 0)
-                {
-                    openList.emplace_front(adjacentTilesIndexes[i], currentStep->pathScoreG + 1, getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex), currentStep);
-                }
-                else if(openList.back().getScoreF() < getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex) + currentStep->pathScoreG + 1)
-                {
-                    openList.emplace_back(adjacentTilesIndexes[i], currentStep->pathScoreG + 1, getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex), currentStep);
-                }
-                else
-                {
-                    for(auto it = openList.begin(); it != openList.end(); ++it)
-                    {
-                        if((*it).getScoreF() >= getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex) + currentStep->pathScoreG + 1)
-                        {
-                            openList.emplace(it, adjacentTilesIndexes[i], currentStep->pathScoreG + 1,
-                                             getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex), currentStep);
-                            break;
-                        }
-                    }
-                }
+                openList.emplace_back(adjacentTilesIndexes[i], currentStep->pathScoreG + 1,
+                                      getHeuristicDistance(adjacentTilesIndexes[i], endTileIndex), currentStep);
             }
             else
             {
@@ -246,9 +416,7 @@ void MovementComponent::findNewPath(GameEntity& gameEntity)
     isPathCalculated = true;
 
     std::cout << " findNewPath() finished\n";
-}
-
-const std::vector<int>& MovementComponent::getPath() const
-{
-    return path;
+    auto timer2 = high_resolution_clock::now();
+    auto wynikPomiaru = duration_cast<milliseconds>(timer2 - timer1).count();
+    std::cout << "Pomiar wynik to : " << wynikPomiaru << "\n";
 }

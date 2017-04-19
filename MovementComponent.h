@@ -35,11 +35,13 @@ private:
 
 public:
     MovementComponent(Map& gameMap);
+    MovementComponent* clone() const override;
 
     const std::vector<int>& getPath() const;
 
-    virtual void update(GameEntity& gameEntity);
+    void acceptMessage(MessageType messageType);
     void setDestinationTile(int tileIndex);
+    virtual void update(GameEntity& gameEntity);
 };
 
 #endif // MOVEMENT_COMPONENT_H

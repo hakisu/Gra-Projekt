@@ -1,22 +1,27 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "ContextMenuOrders.h"
 #include "GameClock.h"
 #include "GameEntity.h"
 #include "InputManager.h"
 #include "Map.h"
+#include "TaskExecuteSystem.h"
 
 using sf::RenderWindow;
 using sf::View;
 
 class Game
 {
-private:
+//private:
+public:
     RenderWindow& window;
     InputManager inputManager;
     Map gameMap;
     View gameCamera;
     GameClock gameClock;
+    ContextMenuOrders contextMenuOrders;
+    TaskExecuteSystem taskExecuteSystem;
 
     unsigned int currentGameSpeed;
 

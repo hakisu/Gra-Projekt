@@ -55,6 +55,8 @@
 		</Compiler>
 		<Unit filename="Component.h" />
 		<Unit filename="Constants.h" />
+		<Unit filename="ContextMenuOrders.cpp" />
+		<Unit filename="ContextMenuOrders.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="GameClock.cpp" />
@@ -72,12 +74,22 @@
 		<Unit filename="Map.h" />
 		<Unit filename="MovementComponent.cpp" />
 		<Unit filename="MovementComponent.h" />
+		<Unit filename="Order.cpp" />
+		<Unit filename="Order.h" />
 		<Unit filename="PathDisplaySystem.cpp" />
 		<Unit filename="PathDisplaySystem.h" />
 		<Unit filename="RandomNumberGenerator.cpp" />
 		<Unit filename="RandomNumberGenerator.h" />
+		<Unit filename="Task.cpp" />
+		<Unit filename="Task.h" />
+		<Unit filename="TaskExecuteComponent.cpp" />
+		<Unit filename="TaskExecuteComponent.h" />
+		<Unit filename="TaskExecuteSystem.cpp" />
+		<Unit filename="TaskExecuteSystem.h" />
 		<Unit filename="Tile.cpp" />
 		<Unit filename="Tile.h" />
+		<Unit filename="TreeGenerationSystem.cpp" />
+		<Unit filename="TreeGenerationSystem.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

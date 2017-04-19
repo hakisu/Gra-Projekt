@@ -3,13 +3,16 @@
 
 class GameEntity;
 
+enum class MessageType { destinationReached };
+
 class Component
 {
-private:
 public:
     virtual ~Component() {}
-//    virtual void acceptMessage(int i) = 0;
-    virtual void update(GameEntity& gameEntity){};
+    virtual Component* clone() const = 0;
+
+    virtual void acceptMessage(MessageType messageType) = 0;
+    virtual void update(GameEntity& gameEntity) {};
 };
 
 #endif // COMPONENT_H

@@ -484,7 +484,7 @@
 
 1490118881 c:\users\michael\onedrive\gra-projekt\component.h
 
-1490870510 source:c:\users\michael\skydrive\gra-projekt\game.cpp
+1491994795 source:c:\users\michael\skydrive\gra-projekt\game.cpp
 	"Game.h"
 	<chrono>
 	<fstream>
@@ -496,18 +496,20 @@
 	"GameLibrary.h"
 	"GraphicsComponent.h"
 	"Map.h"
+	"ContextMenuOrders.h"
 	"MovementComponent.h"
 	"PathDisplaySystem.h"
 	"RandomNumberGenerator.h"
 
-1491410048 source:c:\users\michael\skydrive\gra-projekt\map.cpp
+1491908505 source:c:\users\michael\skydrive\gra-projekt\map.cpp
 	"Map.h"
 	<iostream>
+	<vector>
 	"Constants.h"
 	"RandomNumberGenerator.h"
 	"Tile.h"
 
-1491409984 c:\users\michael\skydrive\gra-projekt\map.h
+1491467136 c:\users\michael\skydrive\gra-projekt\map.h
 	"SFML/Graphics.hpp"
 
 1491409285 c:\users\michael\skydrive\gra-projekt\tile.h
@@ -516,17 +518,19 @@
 1491409313 source:c:\users\michael\skydrive\gra-projekt\tile.cpp
 	"Tile.h"
 
-1490870331 source:c:\users\michael\skydrive\gra-projekt\main.cpp
+1491941251 source:c:\users\michael\skydrive\gra-projekt\main.cpp
 	<iostream>
 	<thread>
 	"Component.h"
 	"Game.h"
 	"Map.h"
 
-1490741958 c:\users\michael\skydrive\gra-projekt\game.h
+1491834376 c:\users\michael\skydrive\gra-projekt\game.h
+	"ContextMenuOrders.h"
+	"GameClock.h"
+	"GameEntity.h"
 	"InputManager.h"
 	"Map.h"
-	"GameEntity.h"
 
 1490118881 c:\users\michael\skydrive\gra-projekt\component.h
 
@@ -547,9 +551,9 @@
 
 1489956573 c:\users\michael\skydrive\gra-projekt\inputmanager.h
 
-1491408872 c:\users\michael\skydrive\gra-projekt\constants.h
+1491472805 c:\users\michael\skydrive\gra-projekt\constants.h
 
-1490804151 source:c:\users\michael\skydrive\gra-projekt\inputmanager.cpp
+1491897963 source:c:\users\michael\skydrive\gra-projekt\inputmanager.cpp
 	"InputManager.h"
 	<iostream>
 	<SFML/Graphics.hpp>
@@ -630,7 +634,7 @@
 1489623727 c:\users\michael\skydrive\gra-projekt\randomnumbergenerator.h
 	<random>
 
-1490017263 source:c:\users\michael\skydrive\gra-projekt\randomnumbergenerator.cpp
+1491909094 source:c:\users\michael\skydrive\gra-projekt\randomnumbergenerator.cpp
 	"RandomNumberGenerator.h"
 	<chrono>
 
@@ -674,12 +678,14 @@
 1490214514 source:c:\users\michael\onedrive\gra-projekt\gamelibrary.cpp
 	"GameLibrary.h"
 
-1491408864 source:c:\users\michael\skydrive\gra-projekt\movementcomponent.cpp
+1491942805 source:c:\users\michael\skydrive\gra-projekt\movementcomponent.cpp
 	"MovementComponent.h"
 	<iostream>
+	<limits>
 	"GameEntity.h"
 	"Constants.h"
 	"RandomNumberGenerator.h"
+	<chrono>
 
 1490731038 c:\users\michael\skydrive\gra-projekt\movementcomponent.h
 	<vector>
@@ -724,7 +730,7 @@
 	"MovementComponent.h"
 	"RandomNumberGenerator.h"
 
-1491424925 source:c:\users\szali\onedrive\gra-projekt\game.cpp
+1492119432 source:c:\users\szali\onedrive\gra-projekt\game.cpp
 	"Game.h"
 	<chrono>
 	<fstream>
@@ -736,25 +742,29 @@
 	"GameLibrary.h"
 	"GraphicsComponent.h"
 	"Map.h"
+	"ContextMenuOrders.h"
 	"MovementComponent.h"
 	"PathDisplaySystem.h"
 	"RandomNumberGenerator.h"
 
-1491420961 c:\users\szali\onedrive\gra-projekt\game.h
+1492031420 c:\users\szali\onedrive\gra-projekt\game.h
+	"ContextMenuOrders.h"
 	"GameClock.h"
 	"GameEntity.h"
 	"InputManager.h"
 	"Map.h"
+	"TaskExecuteSystem.h"
 
 1489956573 c:\users\szali\onedrive\gra-projekt\inputmanager.h
 
-1491409984 c:\users\szali\onedrive\gra-projekt\map.h
+1491467136 c:\users\szali\onedrive\gra-projekt\map.h
 	"SFML/Graphics.hpp"
 
-1490690449 c:\users\szali\onedrive\gra-projekt\gameentity.h
+1492094935 c:\users\szali\onedrive\gra-projekt\gameentity.h
+	<memory>
 	<vector>
 
-1491408872 c:\users\szali\onedrive\gra-projekt\constants.h
+1492125604 c:\users\szali\onedrive\gra-projekt\constants.h
 
 1490084531 c:\users\szali\onedrive\gra-projekt\gamelibrary.h
 	"GraphicsComponent.h"
@@ -777,7 +787,7 @@
 1489623727 c:\users\szali\onedrive\gra-projekt\randomnumbergenerator.h
 	<random>
 
-1490802877 source:c:\users\szali\onedrive\gra-projekt\gameentity.cpp
+1492097698 source:c:\users\szali\onedrive\gra-projekt\gameentity.cpp
 	"GameEntity.h"
 	<iostream>
 	"Constants.h"
@@ -791,7 +801,7 @@
 	"GraphicsComponent.h"
 	<iostream>
 
-1490804151 source:c:\users\szali\onedrive\gra-projekt\inputmanager.cpp
+1492095491 source:c:\users\szali\onedrive\gra-projekt\inputmanager.cpp
 	"InputManager.h"
 	<iostream>
 	<SFML/Graphics.hpp>
@@ -800,21 +810,23 @@
 	"GameEntity.h"
 	"MovementComponent.h"
 
-1490870331 source:c:\users\szali\onedrive\gra-projekt\main.cpp
+1492110569 source:c:\users\szali\onedrive\gra-projekt\main.cpp
 	<iostream>
 	<thread>
 	"Component.h"
 	"Game.h"
 	"Map.h"
 
-1491408864 source:c:\users\szali\onedrive\gra-projekt\movementcomponent.cpp
+1491942805 source:c:\users\szali\onedrive\gra-projekt\movementcomponent.cpp
 	"MovementComponent.h"
 	<iostream>
+	<limits>
 	"GameEntity.h"
 	"Constants.h"
 	"RandomNumberGenerator.h"
+	<chrono>
 
-1490867413 source:c:\users\szali\onedrive\gra-projekt\pathdisplaysystem.cpp
+1492095542 source:c:\users\szali\onedrive\gra-projekt\pathdisplaysystem.cpp
 	"PathDisplaySystem.h"
 	<iostream>
 	<typeinfo>
@@ -823,7 +835,7 @@
 	"MovementComponent.h"
 	"RandomNumberGenerator.h"
 
-1490017263 source:c:\users\szali\onedrive\gra-projekt\randomnumbergenerator.cpp
+1491909094 source:c:\users\szali\onedrive\gra-projekt\randomnumbergenerator.cpp
 	"RandomNumberGenerator.h"
 	<chrono>
 
@@ -833,9 +845,10 @@
 1491409285 c:\users\szali\onedrive\gra-projekt\tile.h
 	<string>
 
-1491410436 source:c:\users\szali\onedrive\gra-projekt\map.cpp
+1491908505 source:c:\users\szali\onedrive\gra-projekt\map.cpp
 	"Map.h"
 	<iostream>
+	<vector>
 	"Constants.h"
 	"RandomNumberGenerator.h"
 	"Tile.h"
@@ -846,4 +859,82 @@
 
 1491422590 c:\users\szali\onedrive\gra-projekt\gameclock.h
 	<string>
+
+1491422590 c:\users\michael\skydrive\gra-projekt\gameclock.h
+	<string>
+
+1491423441 source:c:\users\michael\skydrive\gra-projekt\gameclock.cpp
+	"GameClock.h"
+	<sstream>
+
+1491830435 source:c:\users\michael\skydrive\gra-projekt\menu.cpp
+	"Menu.h"
+	<iostream>
+
+1491827800 c:\users\michael\skydrive\gra-projekt\menu.h
+	"SFML/Graphics.hpp"
+
+1491908675 source:c:\users\michael\skydrive\gra-projekt\contextmenuorders.cpp
+	"ContextMenuOrders.h"
+	<iostream>
+
+1491900479 c:\users\michael\skydrive\gra-projekt\contextmenuorders.h
+	<vector>
+	"SFML/Graphics.hpp"
+	"Order.h"
+
+1491908348 c:\users\michael\skydrive\gra-projekt\order.h
+	<string>
+
+1491908151 source:c:\users\michael\skydrive\gra-projekt\order.cpp
+	"Order.h"
+
+1491909170 source:c:\users\michael\skydrive\gra-projekt\treegenerationsystem.cpp
+	"TreeGenerationSystem.h"
+
+1491940830 c:\users\michael\skydrive\gra-projekt\treegenerationsystem.h
+	<vector>
+
+1491908675 source:c:\users\szali\onedrive\gra-projekt\contextmenuorders.cpp
+	"ContextMenuOrders.h"
+	<iostream>
+
+1491900479 c:\users\szali\onedrive\gra-projekt\contextmenuorders.h
+	<vector>
+	"SFML/Graphics.hpp"
+	"Order.h"
+
+1491908348 c:\users\szali\onedrive\gra-projekt\order.h
+	<string>
+
+1491908151 source:c:\users\szali\onedrive\gra-projekt\order.cpp
+	"Order.h"
+
+1491909170 source:c:\users\szali\onedrive\gra-projekt\treegenerationsystem.cpp
+	"TreeGenerationSystem.h"
+
+1491940830 c:\users\szali\onedrive\gra-projekt\treegenerationsystem.h
+	<vector>
+
+1492032454 c:\users\szali\onedrive\gra-projekt\taskexecutesystem.h
+	<vector>
+	"Task.h"
+
+1492027357 c:\users\szali\onedrive\gra-projekt\task.h
+
+1492027385 source:c:\users\szali\onedrive\gra-projekt\task.cpp
+	"Task.h"
+
+1492036255 source:c:\users\szali\onedrive\gra-projekt\taskexecutecomponent.cpp
+	"TaskExecuteComponent.h"
+
+1492036213 c:\users\szali\onedrive\gra-projekt\taskexecutecomponent.h
+	"Component.h"
+	"Task.h"
+
+1492125646 source:c:\users\szali\onedrive\gra-projekt\taskexecutesystem.cpp
+	"TaskExecuteSystem.h"
+	<typeinfo>
+	"GameEntity.h"
+	"TaskExecuteComponent.h"
 

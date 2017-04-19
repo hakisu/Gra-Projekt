@@ -1,6 +1,8 @@
 #include <iostream>
 #include <thread>
 
+#include "SFML\OpenGL.hpp"
+
 #include "Component.h"
 #include "Game.h"
 #include "Map.h"
@@ -17,10 +19,11 @@ int main()
             // Nie uzywamy antyaliasingu, gdyz nawet mala wartosc powyzej 0 powoduje powstawanie lini(artefaktow) miedzy plytkami planszy, kiedy uzywany jest zoom
             settings.antialiasingLevel = 0;
             sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2), "Tytul okna", sf::Style::Close, settings);
+            window.setFramerateLimit(0);
+            window.setVerticalSyncEnabled(false);
 
-            Game *game = new Game(window);
+            unique_ptr<Game> game(new Game(window));
             game->run();
-            delete game;
         }
         catch(std::exception &e)
         {
@@ -28,6 +31,7 @@ int main()
         }
 
         cout << "Wpisz 0 aby wylaczyc gre, inna cyfre aby stworzyc nowa gre: \n";
+
         int a;
         cin >> a;
         if(a == 0)

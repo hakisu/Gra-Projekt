@@ -6,7 +6,10 @@
 #include "Constants.h"
 #include "Game.h"
 #include "GameEntity.h"
+#include "GameLibrary.h"
 #include "MovementComponent.h"
+
+using namespace std;
 
 InputManager::InputManager(sf::RenderWindow& window, sf::View& gameCamera) : window(window), gameCamera(gameCamera)
 {
@@ -15,7 +18,7 @@ InputManager::InputManager(sf::RenderWindow& window, sf::View& gameCamera) : win
 
 void InputManager::handleInput(Game& game)
 {
-    double moveValue = 10;
+    double moveValue = 40;
     sf::Event event;
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -48,33 +51,44 @@ void InputManager::handleInput(Game& game)
         }
         if(event.type == sf::Event::MouseButtonReleased)
         {
+            int mouseX = event.mouseButton.x;
+            int mouseY = event.mouseButton.y;
+
             if(event.mouseButton.button == sf::Mouse::Left)
             {
-                double mouseX = event.mouseButton.x;
-                double mouseY = event.mouseButton.y;
-                sf::Vector2i pixelPos(mouseX, mouseY);
-                sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
-                mouseX = worldPos.x;
-                mouseY = worldPos.y;
-
-                int intMouseX = mouseX / Constants::TILE_WIDTH;
-                int intMouseY = mouseY / Constants::TILE_HEIGHT;
-
-                int tileIndex = intMouseX + intMouseY * Constants::MAP_WIDTH;
-
-                if(game.getMap().isWalkable(tileIndex))
+                // kliknelismy myszka na menu wydawania rozkazow
+                if(game.contextMenuOrders.processMousePosition(mouseX, mouseY, game.taskExecuteSystem, game.window))
                 {
-                    MovementComponent* temp;
-                    for(int i = 0; i < game.numberOfObjects; ++i)
-                    {
-                        temp = (MovementComponent*)(game.objects[i].components[0]);
-                        temp->setDestinationTile(tileIndex);
-                    }
-                }
-                else
-                    std::cout << "Nie da sie wejsc na to pole!\n";
 
-                std::cout << intMouseX << " " << intMouseY << "\n";
+                }
+                // kliknelismy myszka na mape swiata gry
+                else
+                {
+                    gl::changePositionToWorldPosition(mouseX, mouseY, window);
+
+                    int tileIndex = gl::calculateTileIndex(mouseX, mouseY);
+
+                    if(game.getMap().isWalkable(tileIndex))
+                    {
+                        MovementComponent* temp;
+                        for(int i = 0; i < game.numberOfObjects; ++i)
+                        {
+                            temp = gl::getComponentPtr<MovementComponent>(game.objects[i]);
+                            temp->setDestinationTile(tileIndex);
+                        }
+                    }
+                    else
+                        std::cout << "Nie da sie wejsc na to pole!\n";
+                }
+            }
+            if(event.mouseButton.button == sf::Mouse::Right)
+            {
+                game.contextMenuOrders.setPosition(mouseX, mouseY);
+                game.contextMenuOrders.setVisible(true);
+
+                gl::changePositionToWorldPosition(mouseX, mouseY, window);
+                int tileIndex = gl::calculateTileIndex(mouseX, mouseY);
+                game.contextMenuOrders.setSelectedTileIndex(tileIndex);
             }
         }
         if(event.type == sf::Event::MouseWheelScrolled)
@@ -93,6 +107,11 @@ void InputManager::handleInput(Game& game)
             {
                 case sf::Keyboard::Escape :
                 {
+                    if(game.contextMenuOrders.isVisible())
+                    {
+                        game.contextMenuOrders.setVisible(false);
+                        break;
+                    }
                     window.close();
                     return;
                 }

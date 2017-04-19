@@ -9,7 +9,7 @@ public:
     const static int MAP_HEIGHT = 100;
 
     // ilosc updatow silnika gry w ciagu sekundy
-    const static unsigned int FRAMES_PER_SECOND = 30;
+    const static unsigned int FRAMES_PER_SECOND = 60;
     const static unsigned int GAME_SPEED = 1000 / FRAMES_PER_SECOND;
 
     // stale do pliku map.png
@@ -19,7 +19,7 @@ public:
     const static unsigned int MAP_TILESET_GRAPHICS_INITIAL_POSITION = 3;
 
     // wtepna ilosc obiektow do zarezerwowania
-    const static unsigned int INITIAL_OBJECTS_RESERVED = 5;
+    const static unsigned int INITIAL_OBJECTS_RESERVED = 1;
 };
 
 #endif // CONSTANTS_H

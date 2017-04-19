@@ -8,18 +8,24 @@
 #include <typeinfo>
 
 #include "Constants.h"
+#include "ContextMenuOrders.h"
 #include "GameLibrary.h"
 #include "GraphicsComponent.h"
 #include "Map.h"
 #include "MovementComponent.h"
 #include "PathDisplaySystem.h"
 #include "RandomNumberGenerator.h"
+#include "TaskExecuteComponent.h"
 
 using namespace std::chrono;
 using namespace std;
 
+sf::Texture test;
+sf::Sprite testSprite;
+
 Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, gameCamera),
                                        gameMap(Constants::MAP_WIDTH, Constants::MAP_HEIGHT),
+                                       contextMenuOrders(), taskExecuteSystem(),
                                        currentGameSpeed(Constants::GAME_SPEED)
 {
     this->numberOfObjects = Constants::INITIAL_OBJECTS_RESERVED;
@@ -30,9 +36,16 @@ Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, game
         objects.emplace_back(RandomNumberGenerator::getIntNumber(0, Constants::MAP_WIDTH - 1),
                              RandomNumberGenerator::getIntNumber(0, Constants::MAP_HEIGHT - 1),
                              new GraphicsComponent());
+
+        objects[i].addComponent(new TaskExecuteComponent());
         objects[i].addComponent(new MovementComponent(gameMap));
     }
+
     cout << "\n\n Zaczynamy run() :\n\n";
+
+
+    test.loadFromFile("Graphics/test.png");
+    testSprite.setTexture(test);
 }
 
 int Game::run()
@@ -42,29 +55,32 @@ int Game::run()
     gameCamera.reset(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
     gameCamera.setCenter(3000, 3000);
     sf::RenderStates states;
+    
 
     double timeDelay = 0;
     auto previousTimeMeasure = high_resolution_clock::now();
     while(window.isOpen())
     {
-        this_thread::sleep_for(1ms);
         // Pomiar czasu wykonywania 1 klatki gry
         auto newTimeMeasure = high_resolution_clock::now();
-        double timeDifference = duration_cast<milliseconds>(newTimeMeasure - previousTimeMeasure).count();
-        timeDelay += timeDifference;
-        previousTimeMeasure = newTimeMeasure;
+        double timeDifference = duration_cast<microseconds>(newTimeMeasure - previousTimeMeasure).count();
 
-        // Obsluga inputu
-        inputManager.handleInput(*this);
+        // dzielimy przez 1000 bo chcemy miec timeDelay w milisekunach, a timeDifference jest mierzone w mikrosekundach
+        timeDelay += timeDifference / 1000;
+        previousTimeMeasure = newTimeMeasure;
 
         while(timeDelay >= currentGameSpeed)
         {
+            // Obsluga inputu
+            inputManager.handleInput(*this);
+
             // silnik ai,physics...
             if(testPause == false)
             {
                 update();
+
                 gameClock.updateWithOneGameTick();
-                cout << gameClock.getFullDate() << endl;
+//                cout << gameClock.getFullDate() << endl;
             }
             timeDelay -= currentGameSpeed;
         }
@@ -72,8 +88,8 @@ int Game::run()
         // Renderowanie grafiki
         render(timeDelay / currentGameSpeed);
 
-        if(timeDifference > 10)
-            fileHandle << timeDifference << "\n";
+        if(timeDifference / 1000 > 10)
+            fileHandle << timeDifference / 1000 << "\n";
     }
     fileHandle.close();
     return 0;
@@ -83,7 +99,12 @@ void Game::render(double timeProgressValue)
 {
     window.setView(gameCamera);
 
-    window.clear(sf::Color::Black);
+    window.clear(sf::Color::Red);
+
+    window.setView(window.getDefaultView());
+    window.draw(testSprite);
+    
+    window.setView(gameCamera);
 
     window.draw(gameMap);
 
@@ -97,22 +118,29 @@ void Game::render(double timeProgressValue)
             PathDisplaySystem::render(i, window);
     }
 
-    sf::RectangleShape a;
-
-    a.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
-    a.setPosition(0, 0);
-    a.setFillColor(sf::Color(0, 0, 0, (255.0 / 59) * gameClock.getMinute()));
-
+    //dzien i noc oswietlenie
+//    sf::RectangleShape a;
+//
+//    a.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
+//    a.setPosition(0, 0);
+//    a.setFillColor(sf::Color(0, 0, 0, (255.0 / 59) * gameClock.getMinute()));
+//
+    // Rysowanie elementow niezaleznie od kamery
     window.setView(window.getDefaultView());
-    window.draw(a);
-    window.setView(gameCamera);
+//    window.draw(a);
 
+    // rysowanie menu wydawania rozkazow
+    window.draw(contextMenuOrders);
+
+    window.setView(gameCamera);
     window.display();
 }
 
 void Game::update()
 {
-    for(int i = 0; i < numberOfObjects; ++i)
+    taskExecuteSystem.update(objects, gameMap);
+
+    for(unsigned int i = 0; i < objects.size(); ++i)
         objects[i].update();
 //    thread first(&Game::foo, this, 0, numberOfObjects/2);
 //    thread second(&Game::foo, this, numberOfObjects/2, numberOfObjects);

@@ -19,7 +19,7 @@ void PathDisplaySystem::render(GameEntity& gameEntity, sf::RenderWindow& window)
         if(typeid(*i) == typeid(MovementComponent))
         {
             displayPath = true;
-            movementComponentPtr = static_cast<MovementComponent*>(i);
+            movementComponentPtr = static_cast<MovementComponent*>(i.get());
             break;
         }
     }

@@ -14,10 +14,12 @@ private:
     bool walkable;
     TileType type;
     int areaNumber;
+
 public:
     Tile();
     Tile(TileType type, string name, bool walkable = true, int areaNumber = 0);
     ~Tile();
+
     TileType getType();
     bool isWalkable();
     int getAreaNumber();
