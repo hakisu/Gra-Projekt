@@ -65,6 +65,10 @@
 		<Unit filename="GameEntity.h" />
 		<Unit filename="GameLibrary.cpp" />
 		<Unit filename="GameLibrary.h" />
+		<Unit filename="GameState.cpp" />
+		<Unit filename="GameState.h" />
+		<Unit filename="GameStateManager.cpp" />
+		<Unit filename="GameStateManager.h" />
 		<Unit filename="GraphicsComponent.cpp" />
 		<Unit filename="GraphicsComponent.h" />
 		<Unit filename="InputManager.cpp" />

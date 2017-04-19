@@ -299,6 +299,7 @@ void Map::generateMapAreasForPathFinding()
     unsigned int tilesNumber = widthTilesNumber * heightTilesNumber;
 
     std::vector<int> idNumbers;
+	idNumbers.reserve(tilesNumber);
     for(unsigned int i = 0; i < tilesNumber; ++i)
         idNumbers.push_back(0);
 

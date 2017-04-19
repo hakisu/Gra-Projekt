@@ -484,7 +484,7 @@
 
 1490118881 c:\users\michael\onedrive\gra-projekt\component.h
 
-1491994795 source:c:\users\michael\skydrive\gra-projekt\game.cpp
+1492550884 source:c:\users\michael\skydrive\gra-projekt\game.cpp
 	"Game.h"
 	<chrono>
 	<fstream>
@@ -493,15 +493,16 @@
 	<thread>
 	<typeinfo>
 	"Constants.h"
+	"ContextMenuOrders.h"
 	"GameLibrary.h"
 	"GraphicsComponent.h"
 	"Map.h"
-	"ContextMenuOrders.h"
 	"MovementComponent.h"
 	"PathDisplaySystem.h"
 	"RandomNumberGenerator.h"
+	"TaskExecuteComponent.h"
 
-1491908505 source:c:\users\michael\skydrive\gra-projekt\map.cpp
+1492617996 source:c:\users\michael\skydrive\gra-projekt\map.cpp
 	"Map.h"
 	<iostream>
 	<vector>
@@ -509,30 +510,32 @@
 	"RandomNumberGenerator.h"
 	"Tile.h"
 
-1491467136 c:\users\michael\skydrive\gra-projekt\map.h
+1492603930 c:\users\michael\skydrive\gra-projekt\map.h
 	"SFML/Graphics.hpp"
 
-1491409285 c:\users\michael\skydrive\gra-projekt\tile.h
+1492526612 c:\users\michael\skydrive\gra-projekt\tile.h
 	<string>
 
 1491409313 source:c:\users\michael\skydrive\gra-projekt\tile.cpp
 	"Tile.h"
 
-1491941251 source:c:\users\michael\skydrive\gra-projekt\main.cpp
+1492604328 source:c:\users\michael\skydrive\gra-projekt\main.cpp
 	<iostream>
 	<thread>
+	"SFML\OpenGL.hpp"
 	"Component.h"
 	"Game.h"
 	"Map.h"
 
-1491834376 c:\users\michael\skydrive\gra-projekt\game.h
+1492031420 c:\users\michael\skydrive\gra-projekt\game.h
 	"ContextMenuOrders.h"
 	"GameClock.h"
 	"GameEntity.h"
 	"InputManager.h"
 	"Map.h"
+	"TaskExecuteSystem.h"
 
-1490118881 c:\users\michael\skydrive\gra-projekt\component.h
+1492530227 c:\users\michael\skydrive\gra-projekt\component.h
 
 1488831688 c:\users\michael\onedrive\gra-projekt\maploader.h
 
@@ -551,34 +554,37 @@
 
 1489956573 c:\users\michael\skydrive\gra-projekt\inputmanager.h
 
-1491472805 c:\users\michael\skydrive\gra-projekt\constants.h
+1492546876 c:\users\michael\skydrive\gra-projekt\constants.h
 
-1491897963 source:c:\users\michael\skydrive\gra-projekt\inputmanager.cpp
+1492549733 source:c:\users\michael\skydrive\gra-projekt\inputmanager.cpp
 	"InputManager.h"
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Constants.h"
 	"Game.h"
 	"GameEntity.h"
+	"GameLibrary.h"
 	"MovementComponent.h"
 
 1490690449 c:\users\michael\onedrive\gra-projekt\gameentity.h
 	<vector>
 
-1490690449 c:\users\michael\skydrive\gra-projekt\gameentity.h
+1492540768 c:\users\michael\skydrive\gra-projekt\gameentity.h
+	<memory>
 	<vector>
+	"Component.h"
 
-1489859247 c:\users\michael\skydrive\gra-projekt\graphicscomponent.h
+1492535327 c:\users\michael\skydrive\gra-projekt\graphicscomponent.h
 	"SFML/Graphics.hpp"
 	"Component.h"
 
-1490802877 source:c:\users\michael\skydrive\gra-projekt\gameentity.cpp
+1492540665 source:c:\users\michael\skydrive\gra-projekt\gameentity.cpp
 	"GameEntity.h"
 	<iostream>
 	"Constants.h"
 	"GraphicsComponent.h"
 
-1490640714 source:c:\users\michael\skydrive\gra-projekt\graphicscomponent.cpp
+1492539854 source:c:\users\michael\skydrive\gra-projekt\graphicscomponent.cpp
 	"GameEntity.h"
 	"GraphicsComponent.h"
 	<iostream>
@@ -651,9 +657,10 @@
 	"GameEntity.h"
 	<iostream>
 
-1490084531 c:\users\michael\skydrive\gra-projekt\gamelibrary.h
+1492526022 c:\users\michael\skydrive\gra-projekt\gamelibrary.h
 	"GraphicsComponent.h"
 	"GameEntity.h"
+	<iostream>
 
 1490084531 c:\users\michael\onedrive\gra-projekt\gamelibrary.h
 	"GraphicsComponent.h"
@@ -672,22 +679,25 @@
 	"GameEntity.h"
 	<iostream>
 
-1490214514 source:c:\users\michael\skydrive\gra-projekt\gamelibrary.cpp
+1492525150 source:c:\users\michael\skydrive\gra-projekt\gamelibrary.cpp
 	"GameLibrary.h"
+	"Constants.h"
+	<iostream>
 
 1490214514 source:c:\users\michael\onedrive\gra-projekt\gamelibrary.cpp
 	"GameLibrary.h"
 
-1491942805 source:c:\users\michael\skydrive\gra-projekt\movementcomponent.cpp
+1492546537 source:c:\users\michael\skydrive\gra-projekt\movementcomponent.cpp
 	"MovementComponent.h"
 	<iostream>
 	<limits>
 	"GameEntity.h"
 	"Constants.h"
+	"GameLibrary.h"
 	"RandomNumberGenerator.h"
 	<chrono>
 
-1490731038 c:\users\michael\skydrive\gra-projekt\movementcomponent.h
+1492535312 c:\users\michael\skydrive\gra-projekt\movementcomponent.h
 	<vector>
 	<list>
 	"Component.h"
@@ -721,7 +731,7 @@
 
 1490742680 c:\users\michael\skydrive\gra-projekt\pathdisplaysystem.h
 
-1490867413 source:c:\users\michael\skydrive\gra-projekt\pathdisplaysystem.cpp
+1492095542 source:c:\users\michael\skydrive\gra-projekt\pathdisplaysystem.cpp
 	"PathDisplaySystem.h"
 	<iostream>
 	<typeinfo>
@@ -874,20 +884,24 @@
 1491827800 c:\users\michael\skydrive\gra-projekt\menu.h
 	"SFML/Graphics.hpp"
 
-1491908675 source:c:\users\michael\skydrive\gra-projekt\contextmenuorders.cpp
+1492512848 source:c:\users\michael\skydrive\gra-projekt\contextmenuorders.cpp
 	"ContextMenuOrders.h"
 	<iostream>
+	"GameLibrary.h"
+	"TaskExecuteSystem.h"
 
-1491900479 c:\users\michael\skydrive\gra-projekt\contextmenuorders.h
+1492510185 c:\users\michael\skydrive\gra-projekt\contextmenuorders.h
+	<memory>
 	<vector>
 	"SFML/Graphics.hpp"
 	"Order.h"
 
-1491908348 c:\users\michael\skydrive\gra-projekt\order.h
+1492448838 c:\users\michael\skydrive\gra-projekt\order.h
 	<string>
 
-1491908151 source:c:\users\michael\skydrive\gra-projekt\order.cpp
+1492514214 source:c:\users\michael\skydrive\gra-projekt\order.cpp
 	"Order.h"
+	"TaskExecuteSystem.h"
 
 1491909170 source:c:\users\michael\skydrive\gra-projekt\treegenerationsystem.cpp
 	"TreeGenerationSystem.h"
@@ -937,4 +951,63 @@
 	<typeinfo>
 	"GameEntity.h"
 	"TaskExecuteComponent.h"
+
+1492465831 c:\users\michael\skydrive\gra-projekt\taskexecutesystem.h
+	<memory>
+	<vector>
+	"Task.h"
+
+1492543630 c:\users\michael\skydrive\gra-projekt\task.h
+	"Component.h"
+
+1492543949 c:\users\michael\skydrive\gra-projekt\taskexecutecomponent.h
+	<memory>
+	"Component.h"
+	"Task.h"
+
+1492436162 source:c:\users\michael\skydrive\gra-projekt\gamestate.cpp
+	"GameState.h"
+
+1492436620 c:\users\michael\skydrive\gra-projekt\gamestate.h
+
+1492436151 source:c:\users\michael\skydrive\gra-projekt\gamestatemanager.cpp
+	"GameStateManager.h"
+
+1492436143 c:\users\michael\skydrive\gra-projekt\gamestatemanager.h
+
+1486739998 c:\sfml-2.4.2\include\sfml\opengl.hpp
+	<SFML/Config.hpp>
+	<windows.h>
+	<GL/gl.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GL/gl.h>
+	<OpenGL/gl.h>
+	<OpenGLES/ES1/gl.h>
+	<OpenGLES/ES1/glext.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2ext.h>
+
+1492545925 source:c:\users\michael\skydrive\gra-projekt\task.cpp
+	"Task.h"
+	"GameEntity.h"
+	"GameLibrary.h"
+	"MovementComponent.h"
+	"TaskExecuteComponent.h"
+	<iostream>
+
+1492544897 source:c:\users\michael\skydrive\gra-projekt\taskexecutecomponent.cpp
+	"TaskExecuteComponent.h"
+	"GameEntity.h"
+	<iostream>
+
+1492545845 source:c:\users\michael\skydrive\gra-projekt\taskexecutesystem.cpp
+	"TaskExecuteSystem.h"
+	<typeinfo>
+	"GameEntity.h"
+	"GameLibrary.h"
+	"Map.h"
+	"TaskExecuteComponent.h"
+	<iostream>
 
