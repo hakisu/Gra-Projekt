@@ -3,6 +3,8 @@
 
 #include "SFML/Graphics.hpp"
 
+#include <fstream>
+
 class Tile;
 
 class Map : public sf::Drawable, public sf::Transformable
@@ -36,6 +38,8 @@ public:
 
     bool isWalkable(int tileIndex);
     int getAreaNumber(int tileIndex);
+    int getType(const int tileIndex) const;
+    void saveMap() const;
 };
 
 #endif // MAP_H
