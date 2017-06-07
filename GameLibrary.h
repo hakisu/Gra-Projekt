@@ -1,20 +1,30 @@
 #ifndef GAME_LIBRARY_H
 #define GAME_LIBRARY_H
 
-#include "GraphicsComponent.h"
 #include "GameEntity.h"
+#include "ComponentGraphics.h"
 
-#include <iostream>
-using namespace std;
+class Map;
+
 namespace gl
 {
     // factory functions
-    GameEntity createCharacter();
+    GameEntity createCharacter(int tileIndexX, int tileIndexY, Map & gameMap);
+
+	GameEntity createTreeSapling(int tileIndexX, int tileIndexY);
+	GameEntity createTreeYoung(int tileIndexX, int tileIndexY);
+	GameEntity createTreeOld(int tileIndexX, int tileIndexY);
+
+	GameEntity createResourceWood(int tileIndexX, int tileIndexY);
+
+	GameEntity createWall(int tileIndexX, int tileIndexY, Map & gameMap);
+	GameEntity createWallBlueprint(int tileIndexX, int tileIndexY);
 
     // helpful functions
     int calculateTileIndex(int positionX, int positionY);
     int calculateHeuristicDistance(int startTileIndex, int endTileIndex);
     void changePositionToWorldPosition(int &mouseX, int &mouseY, sf::RenderWindow &window);
+	int convertIndexesToIndex(int tileIndexX, int tileIndexY);
 
     // template functions
     template<typename T>

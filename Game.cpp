@@ -10,42 +10,49 @@
 #include "Constants.h"
 #include "ContextMenuOrders.h"
 #include "GameLibrary.h"
-#include "GraphicsComponent.h"
+#include "ComponentGraphics.h"
 #include "Map.h"
-#include "MovementComponent.h"
-#include "PathDisplaySystem.h"
+#include "ComponentMovement.h"
+#include "DebugDisplaySystem.h"
 #include "RandomNumberGenerator.h"
-#include "TaskExecuteComponent.h"
+#include "ComponentTaskExecute.h"
 
 using namespace std::chrono;
 using namespace std;
 
-sf::Texture test;
-sf::Sprite testSprite;
 
-Game::Game(sf::RenderWindow& window) : window(window), inputManager(window, gameCamera),
-                                       gameMap(Constants::MAP_WIDTH, Constants::MAP_HEIGHT),
-                                       contextMenuOrders(), taskExecuteSystem(),
-                                       currentGameSpeed(Constants::GAME_SPEED)
+
+Game::Game(sf::RenderWindow& window, atomic<bool> & isLoaded) :
+	window(window),
+	inputManager(window, gameCamera),
+	gameMap(Constants::MAP_WIDTH, Constants::MAP_HEIGHT),
+	contextMenuOrders(), taskExecuteSystem(),
+	gameConsole(gameMap, objects),
+	debugDisplaySystem(Constants::DEBUG_DISPLAY_ALPHA_VALUE),
+	currentGameSpeed(Constants::GAME_SPEED)
 {
     this->numberOfObjects = Constants::INITIAL_OBJECTS_RESERVED;
-    objects.reserve(Constants::INITIAL_OBJECTS_RESERVED);
+    objects.reserve(Constants::INITIAL_OBJECTS_RESERVED + Constants::INITIAL_TREES_CREATED_MAXIMUM);
 
+	// tworzenie postaci i umieszczanie ich w kontenerze (objects)
     for(int i = 0; i < numberOfObjects; ++i)
     {
-        objects.emplace_back(RandomNumberGenerator::getIntNumber(0, Constants::MAP_WIDTH - 1),
-                             RandomNumberGenerator::getIntNumber(0, Constants::MAP_HEIGHT - 1),
-                             new GraphicsComponent());
+		int tileIndexX;
+		int tileIndexY;
+		do
+		{
+			tileIndexX = RandomNumberGenerator::getIntNumber(0, Constants::MAP_WIDTH - 1);
+			tileIndexY = RandomNumberGenerator::getIntNumber(0, Constants::MAP_HEIGHT - 1);
+		} while (!gameMap.isWalkable(gl::convertIndexesToIndex(tileIndexX, tileIndexY)));
 
-        objects[i].addComponent(new TaskExecuteComponent());
-        objects[i].addComponent(new MovementComponent(gameMap));
+		addObject(gl::createCharacter(tileIndexX, tileIndexY, gameMap));
     }
 
-    cout << "\n\n Zaczynamy run() :\n\n";
+	// generowanie drzew na planszy na polach o typie "trawa"
+	treeGenerationSystem.generateTreesOnStart(gameMap, *this);
 
-
-    test.loadFromFile("Graphics/test.png");
-    testSprite.setTexture(test);
+	this_thread::sleep_for(2000ms);
+	isLoaded = true;
 }
 
 int Game::run()
@@ -55,7 +62,7 @@ int Game::run()
     gameCamera.reset(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
     gameCamera.setCenter(3000, 3000);
     sf::RenderStates states;
-    
+
 
     double timeDelay = 0;
     auto previousTimeMeasure = high_resolution_clock::now();
@@ -75,12 +82,10 @@ int Game::run()
             inputManager.handleInput(*this);
 
             // silnik ai,physics...
-            if(testPause == false)
+            if(gamePause == false && gameConsole.isVisible() == false)
             {
                 update();
-
-                gameClock.updateWithOneGameTick();
-//                cout << gameClock.getFullDate() << endl;
+				gameClock.updateWithOneGameTick();
             }
             timeDelay -= currentGameSpeed;
         }
@@ -99,53 +104,70 @@ void Game::render(double timeProgressValue)
 {
     window.setView(gameCamera);
 
-    window.clear(sf::Color::Red);
+    window.clear(sf::Color::Black);
 
     window.setView(window.getDefaultView());
-    window.draw(testSprite);
-    
+
     window.setView(gameCamera);
 
     window.draw(gameMap);
 
-    if(testPause == true)
+    if(gamePause == true)
         timeProgressValue = 0;
 
     for(auto &i : objects)
     {
         i.render(window, timeProgressValue);
-        if(displayPath)
-            PathDisplaySystem::render(i, window);
     }
 
-    //dzien i noc oswietlenie
-//    sf::RectangleShape a;
-//
-//    a.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
-//    a.setPosition(0, 0);
-//    a.setFillColor(sf::Color(0, 0, 0, (255.0 / 59) * gameClock.getMinute()));
-//
     // Rysowanie elementow niezaleznie od kamery
     window.setView(window.getDefaultView());
-//    window.draw(a);
+
+	//dzien i noc oswietlenie
+    sf::RectangleShape dayNightCycler;
+
+    dayNightCycler.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
+    dayNightCycler.setPosition(0, 0);
+	sf::Uint8 alphaValue = 0;
+	if (gameClock.getMinute() < 30)
+	{
+		alphaValue = (255.0 / 59) * gameClock.getMinute();
+	}
+	else if (gameClock.getMinute() <= 59)
+	{
+		alphaValue = (255.0 / 59) * (59 - gameClock.getMinute());
+	}
+
+    dayNightCycler.setFillColor(sf::Color(0, 0, 0, alphaValue));
+    window.draw(dayNightCycler);
 
     // rysowanie menu wydawania rozkazow
     window.draw(contextMenuOrders);
 
     window.setView(gameCamera);
+
+	// rysowanie do debugowania
+	window.draw(debugDisplaySystem);
+
+	window.setView(window.getDefaultView());
+
+	// rysowanie konsoli
+	window.draw(gameConsole);
+
+	window.setView(gameCamera);
+
     window.display();
 }
 
 void Game::update()
 {
     taskExecuteSystem.update(objects, gameMap);
+	taskExecuteSystem.executeTasks(objects, gameMap);
 
     for(unsigned int i = 0; i < objects.size(); ++i)
         objects[i].update();
-//    thread first(&Game::foo, this, 0, numberOfObjects/2);
-//    thread second(&Game::foo, this, numberOfObjects/2, numberOfObjects);
-//    first.join();
-//    second.join();
+
+	treeGenerationSystem.update(gameClock.getMinute() * 100 + gameClock.getSecond(), gameMap, *this);
 }
 
 void Game::foo(int start, int end)
@@ -163,3 +185,38 @@ Map& Game::getMap()
 {
     return this->gameMap;
 }
+
+void Game::addObject(GameEntity gameEntity)
+{
+	for (auto & object : objects)
+	{
+		if (object.getExists() == false)
+		{
+			object = gameEntity;
+			std::cout << "sukces dodania nowego obiektu na miejsce starego" << std::endl;
+			return;
+		}
+	}
+
+	// jesli nie bylo zadnych usunietych gameEntities w objects dodajemy nowy obiekt
+	objects.emplace_back(gameEntity);
+}
+
+/*
+Nie bedzie chyba jednak potrzebne po zmienieniu sposobu dodawania i ustawiania obiektow jako skasowane
+*/
+
+//void Game::removeDeletedObjects()
+//{
+//	// wydajne usuwanie obiektow, ktore juz nie istnieja w grze
+//	for (auto it = objects.begin(); it != objects.end(); ++it)
+//	{
+//		if (it->getExists() == false)
+//		{
+//			*it = objects.back();
+//			objects.pop_back();
+//			// zmniejszamy it o 1, aby zachowac waznosc iteratora i nie pominac obiektu, ktory byl na koncu vectora
+//			--it;
+//		}
+//	}
+//}

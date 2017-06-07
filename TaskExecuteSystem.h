@@ -16,6 +16,7 @@ public:
 
     void addTask(Task *task);
     void cancelTask(int tileIndex);
+	void executeTasks(std::vector<GameEntity> & objects, Map & gameMap);
     void update(std::vector<GameEntity> &objects, Map &gameMap);
 
 private:

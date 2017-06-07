@@ -18,20 +18,31 @@ protected:
     std::string orderText;
 };
 
+/* class OrderCutTree inheriting from Order */
 class OrderCutTree : public Order
 {
 public:
     OrderCutTree();
 
-    void executeOrder(TaskExecuteSystem &taskExecuteSystem, int tileIndex);
+    void executeOrder(TaskExecuteSystem &taskExecuteSystem, int tileIndex) override;
 };
 
+/* class OrderBuildWall inheriting from Order */
+class OrderBuildWall : public Order
+{
+public:
+	OrderBuildWall();
+
+	void executeOrder(TaskExecuteSystem & taskExecuteSystem, int tileIndex) override;
+};
+
+/* class OrdrCancel inheriting from Order */
 class OrderCancel : public Order
 {
 public:
     OrderCancel();
 
-    void executeOrder(TaskExecuteSystem &taskExecuteSystem, int tileIndex);
+    void executeOrder(TaskExecuteSystem &taskExecuteSystem, int tileIndex) override;
 };
 
 #endif // ORDER_H

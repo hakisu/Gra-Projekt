@@ -1,12 +1,22 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 
-class Tile;
+#include "Tile.h"
 
 class Map : public sf::Drawable, public sf::Transformable
 {
+public:
+    Map(int widthTilesNumber, int heightTilesNumber);
+    ~Map();
+
+    bool isWalkable(int tileIndex) const;
+	void setOccupied(int tileIndex, bool occupied);
+    int getAreaNumber(int tileIndex);
+	TileType getType(int tileIndex) const;
+	void saveMap() const;
+
 private:
     // data members
     Tile *mapTable;
@@ -30,12 +40,6 @@ private:
     // metoda to tworzenia obszarow dla algorytmu znajdywania drogii (do zrobienia w pliku Map.cpp)
     void generateMapAreasForPathFinding();
 
-public:
-    Map(int widthTilesNumber, int heightTilesNumber);
-    ~Map();
-
-    bool isWalkable(int tileIndex);
-    int getAreaNumber(int tileIndex);
 };
 
 #endif // MAP_H

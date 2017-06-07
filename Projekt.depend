@@ -740,7 +740,7 @@
 	"MovementComponent.h"
 	"RandomNumberGenerator.h"
 
-1492119432 source:c:\users\szali\onedrive\gra-projekt\game.cpp
+1496880165 source:c:\users\szali\onedrive\gra-projekt\game.cpp
 	"Game.h"
 	<chrono>
 	<fstream>
@@ -749,44 +749,54 @@
 	<thread>
 	<typeinfo>
 	"Constants.h"
+	"ContextMenuOrders.h"
 	"GameLibrary.h"
-	"GraphicsComponent.h"
+	"ComponentGraphics.h"
 	"Map.h"
-	"ContextMenuOrders.h"
-	"MovementComponent.h"
-	"PathDisplaySystem.h"
+	"ComponentMovement.h"
+	"DebugDisplaySystem.h"
 	"RandomNumberGenerator.h"
+	"ComponentTaskExecute.h"
 
-1492031420 c:\users\szali\onedrive\gra-projekt\game.h
+1496880157 c:\users\szali\onedrive\gra-projekt\game.h
+	<atomic>
+	"Console.h"
 	"ContextMenuOrders.h"
+	"DebugDisplaySystem.h"
 	"GameClock.h"
 	"GameEntity.h"
 	"InputManager.h"
 	"Map.h"
 	"TaskExecuteSystem.h"
+	"TreeGenerationSystem.h"
 
 1489956573 c:\users\szali\onedrive\gra-projekt\inputmanager.h
 
-1491467136 c:\users\szali\onedrive\gra-projekt\map.h
-	"SFML/Graphics.hpp"
+1496878256 c:\users\szali\onedrive\gra-projekt\map.h
+	<SFML/Graphics.hpp>
+	"Tile.h"
 
-1492094935 c:\users\szali\onedrive\gra-projekt\gameentity.h
+1496871067 c:\users\szali\onedrive\gra-projekt\gameentity.h
 	<memory>
 	<vector>
+	"Component.h"
 
-1492125604 c:\users\szali\onedrive\gra-projekt\constants.h
+1496680074 c:\users\szali\onedrive\gra-projekt\constants.h
+	<iostream>
 
-1490084531 c:\users\szali\onedrive\gra-projekt\gamelibrary.h
-	"GraphicsComponent.h"
+1496868728 c:\users\szali\onedrive\gra-projekt\gamelibrary.h
 	"GameEntity.h"
+	"ComponentGraphics.h"
 
-1489859247 c:\users\szali\onedrive\gra-projekt\graphicscomponent.h
+1495057517 c:\users\szali\onedrive\gra-projekt\graphicscomponent.h
 	"SFML/Graphics.hpp"
 	"Component.h"
 
-1490118881 c:\users\szali\onedrive\gra-projekt\component.h
+1496680247 c:\users\szali\onedrive\gra-projekt\component.h
+	<string>
+	<typeinfo>
 
-1490731038 c:\users\szali\onedrive\gra-projekt\movementcomponent.h
+1495066936 c:\users\szali\onedrive\gra-projekt\movementcomponent.h
 	<vector>
 	<list>
 	"Component.h"
@@ -797,42 +807,53 @@
 1489623727 c:\users\szali\onedrive\gra-projekt\randomnumbergenerator.h
 	<random>
 
-1492097698 source:c:\users\szali\onedrive\gra-projekt\gameentity.cpp
+1496871180 source:c:\users\szali\onedrive\gra-projekt\gameentity.cpp
 	"GameEntity.h"
 	<iostream>
 	"Constants.h"
-	"GraphicsComponent.h"
+	"ComponentGraphics.h"
 
-1490214514 source:c:\users\szali\onedrive\gra-projekt\gamelibrary.cpp
+1496879777 source:c:\users\szali\onedrive\gra-projekt\gamelibrary.cpp
 	"GameLibrary.h"
+	"ComponentDestructible.h"
+	"ComponentLiftable.h"
+	"Constants.h"
+	"Map.h"
+	"ComponentMovement.h"
+	"ComponentTaskExecute.h"
 
-1490640714 source:c:\users\szali\onedrive\gra-projekt\graphicscomponent.cpp
+1495057621 source:c:\users\szali\onedrive\gra-projekt\graphicscomponent.cpp
 	"GameEntity.h"
 	"GraphicsComponent.h"
 	<iostream>
 
-1492095491 source:c:\users\szali\onedrive\gra-projekt\inputmanager.cpp
+1496880791 source:c:\users\szali\onedrive\gra-projekt\inputmanager.cpp
 	"InputManager.h"
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Constants.h"
 	"Game.h"
 	"GameEntity.h"
-	"MovementComponent.h"
+	"GameLibrary.h"
+	"ComponentMovement.h"
 
-1492110569 source:c:\users\szali\onedrive\gra-projekt\main.cpp
+1496683526 source:c:\users\szali\onedrive\gra-projekt\main.cpp
 	<iostream>
 	<thread>
+	"SFML\OpenGL.hpp"
+	"Constants.h"
 	"Component.h"
 	"Game.h"
 	"Map.h"
+	"Loader.h"
 
-1491942805 source:c:\users\szali\onedrive\gra-projekt\movementcomponent.cpp
+1495069738 source:c:\users\szali\onedrive\gra-projekt\movementcomponent.cpp
 	"MovementComponent.h"
 	<iostream>
 	<limits>
 	"GameEntity.h"
 	"Constants.h"
+	"GameLibrary.h"
 	"RandomNumberGenerator.h"
 	<chrono>
 
@@ -849,19 +870,19 @@
 	"RandomNumberGenerator.h"
 	<chrono>
 
-1491409313 source:c:\users\szali\onedrive\gra-projekt\tile.cpp
+1496872506 source:c:\users\szali\onedrive\gra-projekt\tile.cpp
 	"Tile.h"
 
-1491409285 c:\users\szali\onedrive\gra-projekt\tile.h
+1495072654 c:\users\szali\onedrive\gra-projekt\tile.h
 	<string>
 
-1491908505 source:c:\users\szali\onedrive\gra-projekt\map.cpp
+1496878268 source:c:\users\szali\onedrive\gra-projekt\map.cpp
 	"Map.h"
+	<fstream>
 	<iostream>
 	<vector>
 	"Constants.h"
 	"RandomNumberGenerator.h"
-	"Tile.h"
 
 1491423441 source:c:\users\szali\onedrive\gra-projekt\gameclock.cpp
 	"GameClock.h"
@@ -909,48 +930,79 @@
 1491940830 c:\users\michael\skydrive\gra-projekt\treegenerationsystem.h
 	<vector>
 
-1491908675 source:c:\users\szali\onedrive\gra-projekt\contextmenuorders.cpp
+1495059221 source:c:\users\szali\onedrive\gra-projekt\contextmenuorders.cpp
 	"ContextMenuOrders.h"
 	<iostream>
+	"GameLibrary.h"
+	"TaskExecuteSystem.h"
 
-1491900479 c:\users\szali\onedrive\gra-projekt\contextmenuorders.h
+1495058649 c:\users\szali\onedrive\gra-projekt\contextmenuorders.h
+	<memory>
 	<vector>
 	"SFML/Graphics.hpp"
 	"Order.h"
 
-1491908348 c:\users\szali\onedrive\gra-projekt\order.h
+1495059325 c:\users\szali\onedrive\gra-projekt\order.h
 	<string>
 
-1491908151 source:c:\users\szali\onedrive\gra-projekt\order.cpp
+1495059410 source:c:\users\szali\onedrive\gra-projekt\order.cpp
 	"Order.h"
+	"TaskExecuteSystem.h"
 
-1491909170 source:c:\users\szali\onedrive\gra-projekt\treegenerationsystem.cpp
+1496880018 source:c:\users\szali\onedrive\gra-projekt\treegenerationsystem.cpp
 	"TreeGenerationSystem.h"
+	<set>
+	"ComponentDestructible.h"
+	"Constants.h"
+	"Game.h"
+	"GameEntity.h"
+	"GameLibrary.h"
+	"Map.h"
+	"RandomNumberGenerator.h"
+	<iostream>
 
-1491940830 c:\users\szali\onedrive\gra-projekt\treegenerationsystem.h
+1496875898 c:\users\szali\onedrive\gra-projekt\treegenerationsystem.h
 	<vector>
 
-1492032454 c:\users\szali\onedrive\gra-projekt\taskexecutesystem.h
+1495073366 c:\users\szali\onedrive\gra-projekt\taskexecutesystem.h
+	<memory>
 	<vector>
 	"Task.h"
 
-1492027357 c:\users\szali\onedrive\gra-projekt\task.h
+1496870625 c:\users\szali\onedrive\gra-projekt\task.h
+	<vector>
+	"Component.h"
 
-1492027385 source:c:\users\szali\onedrive\gra-projekt\task.cpp
+1496879023 source:c:\users\szali\onedrive\gra-projekt\task.cpp
 	"Task.h"
+	"ComponentLiftable.h"
+	"Constants.h"
+	"GameEntity.h"
+	"GameLibrary.h"
+	"ComponentMovement.h"
+	"ComponentTaskExecute.h"
+	<iostream>
 
-1492036255 source:c:\users\szali\onedrive\gra-projekt\taskexecutecomponent.cpp
+1495073324 source:c:\users\szali\onedrive\gra-projekt\taskexecutecomponent.cpp
 	"TaskExecuteComponent.h"
+	"GameEntity.h"
+	<iostream>
 
-1492036213 c:\users\szali\onedrive\gra-projekt\taskexecutecomponent.h
+1495073319 c:\users\szali\onedrive\gra-projekt\taskexecutecomponent.h
+	<memory>
 	"Component.h"
 	"Task.h"
 
-1492125646 source:c:\users\szali\onedrive\gra-projekt\taskexecutesystem.cpp
+1496876441 source:c:\users\szali\onedrive\gra-projekt\taskexecutesystem.cpp
 	"TaskExecuteSystem.h"
 	<typeinfo>
+	"ComponentDestructible.h"
+	"Constants.h"
 	"GameEntity.h"
-	"TaskExecuteComponent.h"
+	"GameLibrary.h"
+	"Map.h"
+	"ComponentTaskExecute.h"
+	<iostream>
 
 1492465831 c:\users\michael\skydrive\gra-projekt\taskexecutesystem.h
 	<memory>
@@ -1010,4 +1062,95 @@
 	"Map.h"
 	"TaskExecuteComponent.h"
 	<iostream>
+
+1492436162 source:c:\users\szali\onedrive\gra-projekt\gamestate.cpp
+	"GameState.h"
+
+1492436620 c:\users\szali\onedrive\gra-projekt\gamestate.h
+
+1492436151 source:c:\users\szali\onedrive\gra-projekt\gamestatemanager.cpp
+	"GameStateManager.h"
+
+1492436143 c:\users\szali\onedrive\gra-projekt\gamestatemanager.h
+
+1495048111 c:\users\szali\onedrive\gra-projekt\console.h
+	<SFML/Graphics.hpp>
+
+1495046091 c:\users\szali\onedrive\gra-projekt\debugdisplaysystem.h
+	<SFML/Graphics.hpp>
+	"Map.h"
+
+1495102810 c:\users\szali\onedrive\gra-projekt\componentdestructible.h
+	"Component.h"
+
+1496872416 c:\users\szali\onedrive\gra-projekt\componentliftable.h
+	"Component.h"
+
+1493662655 c:\users\szali\onedrive\gra-projekt\loader.h
+	<atomic>
+
+1496870666 source:c:\users\szali\onedrive\gra-projekt\componentdestructible.cpp
+	"ComponentDestructible.h"
+
+1496872443 source:c:\users\szali\onedrive\gra-projekt\componentliftable.cpp
+	"ComponentLiftable.h"
+	"GameEntity.h"
+
+1496870500 source:c:\users\szali\onedrive\gra-projekt\debugdisplaysystem.cpp
+	"DebugDisplaySystem.h"
+	<iostream>
+	<typeinfo>
+	"ComponentDestructible.h"
+	"Constants.h"
+	"GameEntity.h"
+	"GameLibrary.h"
+	"ComponentMovement.h"
+	"RandomNumberGenerator.h"
+
+1496683614 source:c:\users\szali\onedrive\gra-projekt\loader.cpp
+	"Loader.h"
+	"SFML/Graphics.hpp"
+
+1496682437 source:c:\users\szali\onedrive\gra-projekt\console.cpp
+	"Console.h"
+	"Constants.h"
+	"DebugDisplaySystem.h"
+	"GameEntity.h"
+	"Map.h"
+	<iostream>
+
+1496868703 c:\users\szali\onedrive\gra-projekt\componentgraphics.h
+	"SFML/Graphics.hpp"
+	"Component.h"
+
+1496868677 source:c:\users\szali\onedrive\gra-projekt\componentgraphics.cpp
+	"GameEntity.h"
+	"ComponentGraphics.h"
+	<iostream>
+
+1496870878 source:c:\users\szali\onedrive\gra-projekt\componentmovement.cpp
+	"ComponentMovement.h"
+	<chrono>
+	<iostream>
+	<limits>
+	"GameEntity.h"
+	"Constants.h"
+	"GameLibrary.h"
+	"RandomNumberGenerator.h"
+
+1496868904 c:\users\szali\onedrive\gra-projekt\componentmovement.h
+	<vector>
+	<list>
+	"Component.h"
+	"Map.h"
+
+1496869010 source:c:\users\szali\onedrive\gra-projekt\componenttaskexecute.cpp
+	"ComponentTaskExecute.h"
+	"GameEntity.h"
+	<iostream>
+
+1496869210 c:\users\szali\onedrive\gra-projekt\componenttaskexecute.h
+	<memory>
+	"Component.h"
+	"Task.h"
 

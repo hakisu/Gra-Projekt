@@ -1,11 +1,11 @@
 #include "Map.h"
 
+#include <fstream>
 #include <iostream>
 #include <vector>
 
 #include "Constants.h"
 #include "RandomNumberGenerator.h"
-#include "Tile.h"
 
 // public methods
 Map::Map(int widthTilesNumber, int heightTilesNumber) : widthTilesNumber(widthTilesNumber), heightTilesNumber(heightTilesNumber)
@@ -101,12 +101,17 @@ void Map::generateMap()
     riverGenerator(0, 50, RandomNumberGenerator::getIntNumber(Constants::MAP_WIDTH / 2 , Constants::MAP_WIDTH - 1), RandomNumberGenerator::getIntNumber(5, Constants::MAP_HEIGHT - 10));
     std::cout << "Rzeka zrobiona!\n";
 
-    generateMapAreasForPathFinding();
+	generateMapAreasForPathFinding();
 }
 
-bool Map::isWalkable(int tileIndex)
+bool Map::isWalkable(int tileIndex) const
 {
     return mapTable[tileIndex].isWalkable();
+}
+
+void Map::setOccupied(int tileIndex, bool occupied)
+{
+	mapTable[tileIndex].setOccupied(occupied);
 }
 
 void Map::mountainGenerator()
@@ -143,7 +148,7 @@ void Map::mountainGenerator()
                    (mapTable[(y-1) * widthTilesNumber + x + 1].getType() != TileType::rock0) &&
                    (mapTable[(y+1) * widthTilesNumber + x - 1].getType() != TileType::rock0))
                 {
-                    mapTable[y * widthTilesNumber + x] = Tile(TileType::grass0, "trawa_0");
+                    mapTable[y * widthTilesNumber + x] = Tile(TileType::grass1, "trawa_1");
                 }
             }
         }
@@ -191,7 +196,7 @@ void Map::lakeGenerator(int posX, int posY, int width, int height)
                 if(mapTable[(y + 1) * widthTilesNumber + x].getType() == TileType::water0 &&
                    mapTable[(y-1) * widthTilesNumber + x ].getType() == TileType::water0)
                 {
-                    mapTable[y * widthTilesNumber + x] = Tile(TileType::water0,"water_0");
+                    mapTable[y * widthTilesNumber + x] = Tile(TileType::water0,"water_0", false);
                 }
             }
         }
@@ -294,6 +299,11 @@ int Map::getAreaNumber(int tileIndex)
     return mapTable[tileIndex].getAreaNumber();
 }
 
+TileType Map::getType(int tileIndex) const
+{
+	return mapTable[tileIndex].getType();
+}
+
 void Map::generateMapAreasForPathFinding()
 {
     unsigned int tilesNumber = widthTilesNumber * heightTilesNumber;
@@ -302,7 +312,6 @@ void Map::generateMapAreasForPathFinding()
 	idNumbers.reserve(tilesNumber);
     for(unsigned int i = 0; i < tilesNumber; ++i)
         idNumbers.push_back(0);
-
 
     int id = 1;
     int numberOld = 0;
@@ -402,5 +411,24 @@ void Map::generateMapAreasForPathFinding()
             }
         }
     }
+	// mozna sie zastanowic nad lepszym rozwiazaniem problemu niz ten "hack"
+	mapTable[0].setAreaNumber(mapTable[1].getAreaNumber());
+}
+
+void Map::saveMap() const
+{
+	std::ofstream areaNumbers;
+	areaNumbers.open("SavedAreaNumbers.txt", std::fstream::app);
+
+	areaNumbers << "\n\n";
+	for (int y = 0; y < heightTilesNumber; ++y)
+	{
+		for (int x = 0; x < widthTilesNumber; ++x)
+		{
+			areaNumbers << static_cast<char>(mapTable[y * widthTilesNumber + x].getAreaNumber());
+		}
+		areaNumbers << "\n";
+	}
+	areaNumbers.close();
 }
 

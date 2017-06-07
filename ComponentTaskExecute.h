@@ -6,21 +6,26 @@
 #include "Component.h"
 #include "Task.h"
 
-class TaskExecuteComponent : public Component
+class ComponentTaskExecute : public Component
 {
 public:
-    TaskExecuteComponent();
-    TaskExecuteComponent(const TaskExecuteComponent &taskExecuteComponent);
-    TaskExecuteComponent* clone() const override;
+    ComponentTaskExecute();
+    ComponentTaskExecute(const ComponentTaskExecute &taskExecuteComponent);
+    ComponentTaskExecute* clone() const override;
 
     Task* getCurrentTask();
     void setCurrentTask(Task *task = nullptr);
 
     void acceptMessage(MessageType messageType);
     virtual void update(GameEntity& gameEntity);
+	void execute(GameEntity& gameEntity, std::vector<GameEntity> & objects, Map & gameMap);
 
 private:
     std::unique_ptr<Task> currentTask;
+
+// temp
+public:
+	bool finished = false;
 };
 
 #endif // TASK_EXECUTE_COMPONENT_H

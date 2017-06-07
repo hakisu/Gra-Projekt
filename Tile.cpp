@@ -4,6 +4,7 @@ Tile::Tile()
 {
     type = TileType::ground0;
     walkable = true;
+	occupied = false;
 }
 
 Tile::Tile(TileType type, string name, bool walkable, int areaNumber)
@@ -12,11 +13,11 @@ Tile::Tile(TileType type, string name, bool walkable, int areaNumber)
     this->tileName = name;
     this->walkable = walkable;
     this->areaNumber = areaNumber;
+	this->occupied = false;
 }
 
 Tile::~Tile()
 {
-
 }
 
 TileType Tile::getType()
@@ -26,7 +27,14 @@ TileType Tile::getType()
 
 bool Tile::isWalkable()
 {
-    return walkable;
+	if (occupied)
+	{
+		return false;
+	}
+	else
+	{
+		return walkable;
+	}
 }
 
 
@@ -38,4 +46,14 @@ int Tile::getAreaNumber()
 void Tile::setAreaNumber(int areaNumber)
 {
     this->areaNumber = areaNumber;
+}
+
+void Tile::setOccupied(bool occupied)
+{
+	this->occupied = occupied;
+}
+
+bool Tile::isOccupied() const
+{
+	return occupied;
 }

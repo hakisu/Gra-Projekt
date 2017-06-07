@@ -3,12 +3,15 @@
 
 #include "SFML\OpenGL.hpp"
 
+#include "Constants.h"
 #include "Component.h"
 #include "Game.h"
 #include "Map.h"
 
 using namespace std;
 
+
+#include "Loader.h"
 int main()
 {
     while(true)
@@ -18,11 +21,33 @@ int main()
             sf::ContextSettings settings;
             // Nie uzywamy antyaliasingu, gdyz nawet mala wartosc powyzej 0 powoduje powstawanie lini(artefaktow) miedzy plytkami planszy, kiedy uzywany jest zoom
             settings.antialiasingLevel = 0;
-            sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2), "Tytul okna", sf::Style::Close, settings);
-            window.setFramerateLimit(0);
-            window.setVerticalSyncEnabled(false);
 
-            unique_ptr<Game> game(new Game(window));
+            sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode().width / 2, sf::VideoMode::getDesktopMode().height / 2), "Gra", sf::Style::Close, settings);
+
+            window.setFramerateLimit(Constants::FRAME_RATE_LIMIT);
+            window.setVerticalSyncEnabled(Constants::VERTICAL_SYNC_ENABLED);
+
+            /*
+            Tutaj menu gry do zrobienia z pollEvents
+            czyli jakas petla
+            while(1)
+            {
+                obsluga zdarzen przez pollEvents;
+                rysowanie menu itp. na window;
+                jesli klikamy start(nowa gra) , to po prostu wychodzimy z tego glownego whila
+                jesli klikamy wyjscie to zwracamy return 0 i main sie konczy
+            }
+            */
+
+			// Ladowanie gry
+			atomic<bool> isLoaded(false);
+			window.setActive(false);
+			std::thread loadingThread(&Loader::start, &window, std::ref(isLoaded));
+
+            unique_ptr<Game> game(new Game(window, isLoaded));
+			loadingThread.join();
+
+			// Gra zostala juz zaladowana i mozemy ja odpalic
             game->run();
         }
         catch(std::exception &e)

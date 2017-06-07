@@ -8,8 +8,18 @@
 #include "Map.h"
 
 
-class MovementComponent : public Component
+class ComponentMovement : public Component
 {
+public:
+    ComponentMovement(Map& gameMap);
+    ComponentMovement* clone() const override;
+
+    const std::vector<int>& getPath() const;
+
+    void acceptMessage(MessageType messageType);
+    void setDestinationTile(int tileIndex);
+    virtual void update(GameEntity& gameEntity);
+
 private:
     class PathStep
     {
@@ -29,19 +39,10 @@ private:
     bool isPathCalculated = false;
     float movementSpeed;
     std::vector<int> path;
+	bool messageSent = false;
 
     void findNewPath(GameEntity& gameEntity);
     unsigned int getHeuristicDistance(int startTileIndex, int endTileIndex);
-
-public:
-    MovementComponent(Map& gameMap);
-    MovementComponent* clone() const override;
-
-    const std::vector<int>& getPath() const;
-
-    void acceptMessage(MessageType messageType);
-    void setDestinationTile(int tileIndex);
-    virtual void update(GameEntity& gameEntity);
 };
 
 #endif // MOVEMENT_COMPONENT_H

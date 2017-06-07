@@ -7,7 +7,7 @@
 #include "Component.h"
 
 class Component;
-class GraphicsComponent;
+class ComponentGraphics;
 namespace sf
 {
     class RenderWindow;
@@ -15,34 +15,37 @@ namespace sf
 
 class GameEntity
 {
-private:
-    float posX;
-    float posY;
-    float currentChangeInPosX;
-    float currentChangeInPosY;
-    std::unique_ptr<GraphicsComponent> graphicsComponent;
-    static int entitesNumber;
-
 public:
-    GameEntity(unsigned int posXIndex, unsigned int posYIndex, GraphicsComponent* graphics);
+    GameEntity(unsigned int posXIndex, unsigned int posYIndex, ComponentGraphics* graphics);
     GameEntity(const GameEntity& gameEntity);
     ~GameEntity();
+	GameEntity & operator=(const GameEntity& gameEntity);
 
     float getCurrentChangeInPosX() const;
     float getCurrentChangeInPosY() const;
     float getPosX() const;
     float getPosY() const;
+	bool getExists() const;
     void setCurrentChangeInPosX(float currentChangeInPosX);
     void setCurrentChangeInPosY(float currentChangeInPosY);
     void setPosX(float posX);
     void setPosY(float posY);
+	void setExists(bool exists);
 
     void addComponent(Component* newComponent);
+	std::string getInformationString() const;
     void render(sf::RenderWindow& window, double timeProgressValue);
     void sendMessage(MessageType messageType);
     void update();
 
-    // temp
+	float posX;
+	float posY;
+	float currentChangeInPosX;
+	float currentChangeInPosY;
+	bool exists;
+	std::unique_ptr<ComponentGraphics> graphicsComponent;
+	static int entitesNumber;
+
     std::vector<std::unique_ptr<Component>> components;
 };
 

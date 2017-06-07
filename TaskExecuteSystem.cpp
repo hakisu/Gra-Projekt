@@ -2,10 +2,12 @@
 
 #include <typeinfo>
 
+#include "ComponentDestructible.h"
+#include "Constants.h"
 #include "GameEntity.h"
 #include "GameLibrary.h"
 #include "Map.h"
-#include "TaskExecuteComponent.h"
+#include "ComponentTaskExecute.h"
 
 #include <iostream>
 using namespace std;
@@ -45,6 +47,22 @@ void TaskExecuteSystem::cancelTask(int tileIndex)
     }
 }
 
+void TaskExecuteSystem::executeTasks(std::vector<GameEntity>& objects, Map & gameMap)
+{
+	ComponentTaskExecute *taskExecuteComponentPtr = nullptr;
+	for (auto & gameEntityReference : objects)
+	{
+		if (gameEntityReference.getExists())
+		{
+			taskExecuteComponentPtr = gl::getComponentPtr<ComponentTaskExecute>(gameEntityReference);
+			if (taskExecuteComponentPtr != nullptr)
+			{
+				taskExecuteComponentPtr->execute(gameEntityReference, objects, gameMap);
+			}
+		}
+	}
+}
+
 void TaskExecuteSystem::update(std::vector<GameEntity>& objects, Map &gameMap)
 {
     if(pendingTasksContainer.size() > 0)
@@ -52,16 +70,16 @@ void TaskExecuteSystem::update(std::vector<GameEntity>& objects, Map &gameMap)
         for(auto taskIterator = pendingTasksContainer.begin(); taskIterator != pendingTasksContainer.end(); ++taskIterator)
         {
             int minimalDistance = std::numeric_limits<int>::max();
-            TaskExecuteComponent *bestTaskExecuteComponentPtr = nullptr;
-            TaskExecuteComponent *taskExecuteComponentPtr = nullptr;
+            ComponentTaskExecute *bestTaskExecuteComponentPtr = nullptr;
+            ComponentTaskExecute *taskExecuteComponentPtr = nullptr;
 
             for(auto &gameEntityReference : objects)
             {
                 for(auto &componentPtr : gameEntityReference.components)
                 {
-                    if(typeid(*componentPtr) == typeid(TaskExecuteComponent))
+                    if(typeid(*componentPtr) == typeid(ComponentTaskExecute))
                     {
-                        taskExecuteComponentPtr = static_cast<TaskExecuteComponent*>(componentPtr.get());
+                        taskExecuteComponentPtr = static_cast<ComponentTaskExecute*>(componentPtr.get());
 
                         if(taskExecuteComponentPtr->getCurrentTask() == nullptr)
                         {
@@ -71,10 +89,12 @@ void TaskExecuteSystem::update(std::vector<GameEntity>& objects, Map &gameMap)
                             if(gameMap.getAreaNumber(startTileIndex) == gameMap.getAreaNumber(endTileIndex))
                             {
                                 int distance = gl::calculateHeuristicDistance(startTileIndex, endTileIndex);
+								cout << "distance : " << distance;
 
                                 if(distance < minimalDistance)
                                 {
                                     bestTaskExecuteComponentPtr = taskExecuteComponentPtr;
+									minimalDistance = distance;
                                 }
                             }
                         }
@@ -91,4 +111,18 @@ void TaskExecuteSystem::update(std::vector<GameEntity>& objects, Map &gameMap)
             }
         }
     }
+
+	int index = -1;
+
+	for (auto & i : objects)
+	{
+		if ((gl::getComponentPtr<ComponentTaskExecute>(i) != nullptr) && gl::getComponentPtr<ComponentTaskExecute>(i)->finished == true)
+		{
+			index = gl::calculateTileIndex(i.getPosX(), i.getPosY());
+		}
+		if (gl::getComponentPtr<ComponentDestructible>(i) != nullptr && gl::calculateTileIndex(i.getPosX(), i.getPosY()) == index)
+		{
+			i = gl::createResourceWood(i.getPosX() / Constants::TILE_WIDTH, i.getPosY() / Constants::TILE_HEIGHT);
+		}
+	}
 }

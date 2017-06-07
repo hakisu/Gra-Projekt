@@ -1,17 +1,69 @@
 #include "GameLibrary.h"
 
+#include "ComponentDestructible.h"
+#include "ComponentLiftable.h"
 #include "Constants.h"
-
-#include <iostream>
-using namespace std;
+#include "Map.h"
+#include "ComponentMovement.h"
+#include "ComponentTaskExecute.h"
 
 namespace gl
 {
-    GameEntity createCharacter()
+    GameEntity createCharacter(int tileIndexX, int tileIndexY, Map & gameMap)
     {
-        GameEntity a(0, 0, new GraphicsComponent());
-        return a;
+        GameEntity character(tileIndexX, tileIndexY, new ComponentGraphics(Constants::graphicsPathToCharacter));
+		character.addComponent(new ComponentTaskExecute());
+		character.addComponent(new ComponentMovement(gameMap));
+
+        return character;
     }
+
+	GameEntity createTreeSapling(int tileIndexX, int tileIndexY)
+	{
+		GameEntity tree(tileIndexX, tileIndexY, new ComponentGraphics(Constants::graphicsPathToTreeSapling));
+		tree.addComponent(new ComponentDestructible());
+
+		return tree;
+	}
+
+	GameEntity createTreeYoung(int tileIndexX, int tileIndexY)
+	{
+		GameEntity tree(tileIndexX, tileIndexY, new ComponentGraphics(Constants::graphicsPathToTreeYoung));
+		tree.addComponent(new ComponentDestructible());
+
+		return tree;
+	}
+
+	GameEntity createTreeOld(int tileIndexX, int tileIndexY)
+	{
+		GameEntity tree(tileIndexX, tileIndexY, new ComponentGraphics(Constants::graphicsPathToTreeOld));
+		tree.addComponent(new ComponentDestructible());
+
+		return tree;
+	}
+
+	GameEntity createResourceWood(int tileIndexX, int tileIndexY)
+	{
+		GameEntity resourceWood(tileIndexX, tileIndexY, new ComponentGraphics(Constants::graphicsPathToResourceTree));
+		resourceWood.addComponent(new ComponentLiftable());
+
+		return resourceWood;
+	}
+
+	GameEntity createWall(int tileIndexX, int tileIndexY, Map & gameMap)
+	{
+		GameEntity wall(tileIndexX, tileIndexY, new ComponentGraphics(Constants::graphicsPathToWall));
+		gameMap.setOccupied(gl::convertIndexesToIndex(tileIndexX, tileIndexY), true);
+			 
+		return wall;
+	}
+
+	GameEntity createWallBlueprint(int tileIndexX, int tileIndexY)
+	{
+		GameEntity wallBlueprint(tileIndexX, tileIndexY, new ComponentGraphics(Constants::graphicsPathToWall, Constants::BLUEPRINT_ALPHA_VALUE));
+
+		return wallBlueprint;
+	}
 
     int calculateTileIndex(int positionX, int positionY)
     {
@@ -41,4 +93,8 @@ namespace gl
         mouseY = worldPos.y;
     }
 
+	int convertIndexesToIndex(int tileIndexX, int tileIndexY)
+	{
+		return tileIndexX + tileIndexY * Constants::MAP_WIDTH;
+	}
 }

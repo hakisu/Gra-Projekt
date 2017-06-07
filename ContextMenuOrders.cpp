@@ -7,8 +7,9 @@
 
 ContextMenuOrders::ContextMenuOrders()
 {
-    addOrder(std::make_unique<OrderCancel>());
+	addOrder(std::make_unique<OrderBuildWall>());
     addOrder(std::make_unique<OrderCutTree>());
+    addOrder(std::make_unique<OrderCancel>());
 
     height = listOfOrders.size() * orderTextSize;
 
